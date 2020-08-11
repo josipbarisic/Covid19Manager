@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="LoginViewModel"
+            type="com.barisic.covid_19manager.viewmodels.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.LoginActivity"
+        android:animateLayoutChanges="true">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/errorLayout"
+            style="@style/ErrorLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/app_logo"
+            android:visibility="gone"
+            setPopupErrorMessage="@{LoginViewModel.errorMessage}"
+            app:errorEnabled="true" />
+
+
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorLayout"
+            app:layout_constraintBottom_toTopOf="@id/textInputOIB"
+            android:contentDescription="@string/app_name" />
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/app_logo"
+            app:layout_constraintBottom_toTopOf="@id/textInputOIB"
+            android:progress="1"
+            setLoading="@{LoginViewModel.loading}"
+            android:visibility="gone" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputOIB"
+            style="@style/TextInputLayoutStyle"
+            setErrorMessage="@{LoginViewModel.oibInputValidator.errorMsg}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/textInputID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_logo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etOIB"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_oib"
+                android:hint="@string/oib"
+                android:inputType="number"
+                android:maxLength="11"
+                android:text="@={LoginViewModel.oibInputValidator.inputValue}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputID"
+            style="@style/TextInputLayoutStyle"
+            setErrorMessage="@{LoginViewModel.idInputValidator.errorMsg}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@id/loginBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputOIB">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etID"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_id"
+                android:hint="@string/id"
+                android:inputType="number"
+                android:maxLength="4"
+                android:text="@={LoginViewModel.idInputValidator.inputValue}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginBtn"
+            style="@style/LoginButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> LoginViewModel.userLogin()}"
+            android:text="@string/login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInputID" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="StanjePacijentaViewModel"
+            type="com.barisic.covid_19manager.viewmodels.StanjePacijentaViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tempValuePickerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTemperature"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvTemperature"
+        app:layout_constraintTop_toTopOf="@id/tvTemperature">
+
+        <TextView
+            android:id="@+id/tvTemperature"
+            style="@style/TemperatureTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature_text"
+            app:layout_constraintEnd_toStartOf="@+id/tvTemperatureValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTemperatureValue"
+            style="@style/TemperatureTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_degree"
+            android:text="@{StanjePacijentaViewModel.temperature.toString()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvTemperature"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <NumberPicker
+            android:id="@+id/tempValueInteger"
+            firstNPTemperatureValue="@{StanjePacijentaViewModel.temperature}"
+            firstNPIntegerNumber="@{StanjePacijentaViewModel.temperatureInteger}"
+            firstNPDecimalNumber="@{StanjePacijentaViewModel.temperatureDecimal}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/TempNumberPickerTheme"
+            app:layout_constraintBottom_toTopOf="@id/btnOk"
+            app:layout_constraintEnd_toStartOf="@id/tempValueDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
+
+        <NumberPicker
+            android:id="@+id/tempValueDecimal"
+            secondNPTemperatureValue="@{StanjePacijentaViewModel.temperature}"
+            secondNPIntegerNumber="@{StanjePacijentaViewModel.temperatureInteger}"
+            secondNPDecimalNumber="@{StanjePacijentaViewModel.temperatureDecimal}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/TempNumberPickerTheme"
+            app:layout_constraintBottom_toBottomOf="@id/tempValueInteger"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tempValueInteger"
+            app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
+
+        <Button
+            android:id="@+id/btnOk"
+            style="@style/LoginButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/ok_btn_text"
+            android:onClick="@{()->StanjePacijentaViewModel.closeTemperaturePickerDialog()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tempValueInteger" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

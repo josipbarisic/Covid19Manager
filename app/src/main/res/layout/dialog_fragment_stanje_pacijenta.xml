@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="StanjePacijentaViewModel"
+            type="com.barisic.covid_19manager.viewmodels.StanjePacijentaViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:padding="5dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/errorLayout"
+            style="@style/ErrorLayoutStyle"
+            setPopupErrorMessage="@{StanjePacijentaViewModel.errorMessage}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/PopupErrorTextAppearanceForDialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:onClick="@{()->StanjePacijentaViewModel.closeStanjePacijentaDialog()}"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorLayout" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="60dp"
+            android:paddingVertical="30dp"
+            android:text="@{StanjePacijentaViewModel.stateOnDayTitle}"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/errorLayout" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/tempIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_temp"
+            app:layout_constraintBottom_toTopOf="@id/tvCaugh"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvTemperature"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature_text"
+            app:layout_constraintBottom_toTopOf="@id/tvCaugh"
+            app:layout_constraintStart_toEndOf="@id/tempIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvTempValue"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/ic_degree"
+            android:padding="0dp"
+            android:text="@{StanjePacijentaViewModel.temperature.toString()}"
+            android:textAlignment="textEnd"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTemperature"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvTemperature"
+            app:layout_constraintTop_toTopOf="@id/tvTemperature" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/coughIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_cough"
+            app:layout_constraintBottom_toTopOf="@id/tvFatigue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTempValue" />
+
+        <TextView
+            android:id="@+id/tvCaugh"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cough_text"
+            app:layout_constraintBottom_toTopOf="@id/tvFatigue"
+            app:layout_constraintEnd_toStartOf="@id/tvCaughValue"
+            app:layout_constraintStart_toEndOf="@id/coughIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvTempValue" />
+
+        <TextView
+            android:id="@+id/tvCaughValue"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StanjePacijentaViewModel.getStringFromBoolean(StanjePacijentaViewModel.coughBoolean)}"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCaugh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvCaugh"
+            app:layout_constraintTop_toTopOf="@id/tvCaugh" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fatigueIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_fatigue"
+            app:layout_constraintBottom_toTopOf="@id/tvMusclePain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCaugh" />
+
+        <TextView
+            android:id="@+id/tvFatigue"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fatigue_text"
+            app:layout_constraintBottom_toTopOf="@id/tvMusclePain"
+            app:layout_constraintEnd_toStartOf="@id/tvFatigueValue"
+            app:layout_constraintStart_toEndOf="@id/fatigueIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvCaugh" />
+
+        <TextView
+            android:id="@+id/tvFatigueValue"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StanjePacijentaViewModel.getStringFromBoolean(StanjePacijentaViewModel.fatigueBoolean)}"
+            app:layout_constraintBottom_toBottomOf="@+id/tvFatigue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvFatigue"
+            app:layout_constraintTop_toTopOf="@id/tvFatigue" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/musclePainIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_muscle_pain"
+            app:layout_constraintBottom_toTopOf="@id/progressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFatigue" />
+
+        <TextView
+            android:id="@+id/tvMusclePain"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/muscle_pain_text"
+            app:layout_constraintBottom_toTopOf="@id/progressBar"
+            app:layout_constraintEnd_toStartOf="@id/tvMusclePainValue"
+            app:layout_constraintStart_toEndOf="@id/musclePainIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvFatigue" />
+
+        <TextView
+            android:id="@+id/tvMusclePainValue"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StanjePacijentaViewModel.getStringFromBoolean(StanjePacijentaViewModel.musclePainBoolean)}"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMusclePain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvMusclePain"
+            app:layout_constraintTop_toTopOf="@id/tvMusclePain" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:progress="1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/submitStateBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMusclePain" />
+
+        <Button
+            android:id="@+id/submitStateBtn"
+            style="@style/LoginButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="30dp"
+            android:onClick="@{()->StanjePacijentaViewModel.confirmState()}"
+            android:text="@string/confirm_btn_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
