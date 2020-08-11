@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="StanjePacijentaViewModel"
+            type="com.barisic.covid_19manager.viewmodels.StanjePacijentaViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.StanjePacijentaFragment">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="60dp"
+            android:paddingVertical="30dp"
+            android:text="@{StanjePacijentaViewModel.stateOnDayTitle}"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/tempIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_temp"
+            app:layout_constraintBottom_toTopOf="@id/tvCaugh"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvTemperature"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/temperature_text"
+            app:layout_constraintBottom_toTopOf="@id/tvCaugh"
+            app:layout_constraintStart_toEndOf="@id/tempIcon"
+            app:layout_constraintEnd_toStartOf="@id/tvTemperatureValue"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <TextView
+            android:id="@+id/tvTemperatureValue"
+            style="@style/TemperatureInputStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StanjePacijentaViewModel.temperature.toString()}"
+            android:onClick="@{()->StanjePacijentaViewModel.showTemperaturePickerDialog()}"
+            app:layout_constraintBottom_toBottomOf="@id/tvTemperature"
+            app:layout_constraintStart_toEndOf="@id/tvTemperature"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTemperature" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/coughIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_cough"
+            app:layout_constraintBottom_toTopOf="@id/tvFatigue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
+
+        <TextView
+            android:id="@+id/tvCaugh"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cough_text"
+            app:layout_constraintBottom_toTopOf="@id/tvFatigue"
+            app:layout_constraintEnd_toStartOf="@id/switchBtnCaugh"
+            app:layout_constraintStart_toEndOf="@id/coughIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchBtnCaugh"
+            style="@style/SwitchButtonStyle"
+            switchValue="@{StanjePacijentaViewModel.coughBoolean}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchButtonTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCaugh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvCaugh"
+            app:layout_constraintTop_toTopOf="@id/tvCaugh" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fatigueIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_fatigue"
+            app:layout_constraintBottom_toTopOf="@id/tvMusclePain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvCaugh" />
+
+        <TextView
+            android:id="@+id/tvFatigue"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fatigue_text"
+            app:layout_constraintBottom_toTopOf="@id/tvMusclePain"
+            app:layout_constraintEnd_toStartOf="@id/switchBtnFatigue"
+            app:layout_constraintStart_toEndOf="@id/fatigueIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvCaugh" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchBtnFatigue"
+            style="@style/SwitchButtonStyle"
+            switchValue="@{StanjePacijentaViewModel.fatigueBoolean}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchButtonTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/tvFatigue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvFatigue"
+            app:layout_constraintTop_toTopOf="@id/tvFatigue" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/musclePainIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_muscle_pain"
+            app:layout_constraintBottom_toTopOf="@id/submitStateBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvFatigue" />
+
+        <TextView
+            android:id="@+id/tvMusclePain"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/muscle_pain_text"
+            app:layout_constraintBottom_toBottomOf="@id/submitStateBtn"
+            app:layout_constraintEnd_toStartOf="@id/switchBtnMusclePain"
+            app:layout_constraintStart_toEndOf="@id/musclePainIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvFatigue" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchBtnMusclePain"
+            style="@style/SwitchButtonStyle"
+            switchValue="@{StanjePacijentaViewModel.musclePainBoolean}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/SwitchButtonTheme"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMusclePain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvMusclePain"
+            app:layout_constraintTop_toTopOf="@id/tvMusclePain" />
+
+        <Button
+            android:id="@+id/submitStateBtn"
+            style="@style/LoginButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->StanjePacijentaViewModel.submitState()}"
+            android:text="@string/submit_btn_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMusclePain" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
