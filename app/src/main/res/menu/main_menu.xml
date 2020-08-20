@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/nav_info"
+        android:id="@+id/nav_info_fragment"
         android:icon="@drawable/ic_info"
         android:title="@string/nav_info_text" />
     <item
-        android:id="@+id/nav_state"
+        android:id="@+id/nav_state_fragment"
         android:icon="@drawable/ic_medical_record"
         android:title="@string/nav_state_text" />
-    <!--<item
-        android:id="@+id/nav_contact"
-        android:icon="@drawable/ic_contact"
-        android:title="@string/nav_contact_text" />-->
     <item
         android:id="@+id/nav_holder"
-        android:title=""
-        android:enabled="false" />
+        android:enabled="false"
+        android:title="" />
     <item
-        android:id="@+id/nav_medical_records"
+        android:id="@+id/nav_state_history_fragment"
         android:icon="@drawable/ic_medical_records"
-        android:title="@string/nav_medical_records_text" />
+        android:title="@string/nav_state_history_text" />
     <item
-        android:id="@+id/nav_logout"
+        android:id="@+id/nav_log_out_dialog"
         android:icon="@drawable/ic_logout"
         android:title="@string/nav_logout_text" />
-
 </menu>

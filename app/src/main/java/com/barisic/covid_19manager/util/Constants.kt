@@ -8,7 +8,8 @@ const val JSON_TOKEN_URL = "https://login.microsoftonline.com/"
 const val OIB = "OIB"
 const val ID = "ID"
 const val TEMP = "TEMP"
-const val PREFS_NAME = "covid19managerPrefs"
+
+const val HZJZ_PHONE = "+38598227753"
 
 const val CLIENT_ID = "client_id"
 const val SCOPE = "scope"
@@ -20,6 +21,7 @@ const val LOGGED_USER_OIB = "logged_user_oib"
 const val LOGGED_USER_ID = "logged_user_id"
 const val LOGGED_USER_LAT = "logged_user_lat"
 const val LOGGED_USER_LONG = "logged_user_long"
+const val LOGGED_USER_EPIDEMIOLOGIST = "logged_user_epidemiologist"
 
 //RESULTS
 const val RESULT_SUCCESS = "SUCCESS"

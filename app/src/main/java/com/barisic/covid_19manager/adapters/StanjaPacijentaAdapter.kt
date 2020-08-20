@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.barisic.covid_19manager.databinding.ItemStanjePacijentaBinding
 import com.barisic.covid_19manager.models.StanjePacijenta
+import timber.log.Timber
 
-class StanjaPacijentaAdapter : RecyclerView.Adapter<StanjaPacijentaAdapter.StanjeViewHolder>() {
+class StanjaPacijentaAdapter(private var stanjaPacijentaList: ArrayList<StanjePacijenta>) :
+    RecyclerView.Adapter<StanjaPacijentaAdapter.StanjeViewHolder>() {
     private lateinit var binding: ItemStanjePacijentaBinding
-    private lateinit var stanjaPacijentaList: ArrayList<StanjePacijenta>
 
-    fun StanjaPacijentaAdapter(list: ArrayList<StanjePacijenta>) {
-        this.stanjaPacijentaList = list
+    init {
+        Timber.d("StanjePacijentaAdapter CREATED $itemCount")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StanjeViewHolder {
@@ -20,16 +21,11 @@ class StanjaPacijentaAdapter : RecyclerView.Adapter<StanjaPacijentaAdapter.Stanj
         return StanjeViewHolder(binding)
     }
 
-    class StanjeViewHolder(binding: ItemStanjePacijentaBinding) :
+    class StanjeViewHolder(private val binding: ItemStanjePacijentaBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private lateinit var binding: ItemStanjePacijentaBinding
 
-        fun StanjeViewHolder(binding: ItemStanjePacijentaBinding) {
-            this.binding = binding
-        }
-
-        fun bind() {
-
+        fun bind(stanjePacijenta: StanjePacijenta) {
+            binding.stanjePacijenta = stanjePacijenta
         }
     }
 
@@ -38,6 +34,6 @@ class StanjaPacijentaAdapter : RecyclerView.Adapter<StanjaPacijentaAdapter.Stanj
     }
 
     override fun onBindViewHolder(holder: StanjeViewHolder, position: Int) {
-        holder
+        holder.bind(stanjaPacijentaList[position])
     }
 }

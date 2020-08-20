@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.models.Pacijent
+import com.barisic.covid_19manager.repositories.EpidemiologRepository
 import com.barisic.covid_19manager.repositories.JsonWebTokenRepository
 import com.barisic.covid_19manager.repositories.PacijentRepository
 import com.barisic.covid_19manager.util.*
@@ -16,6 +17,7 @@ import com.google.gson.GsonBuilder
 class LoginViewModel(
     var application: Application,
     private var pacijentRepository: PacijentRepository,
+    private var epidemiologRepository: EpidemiologRepository,
     private var jsonTokenRepository: JsonWebTokenRepository
 ) :
     ViewModel() {
@@ -90,6 +92,23 @@ class LoginViewModel(
                                 LOGGED_USER_LONG,
                                 pacijentObject.long.toString()
                             )
+                            epidemiologRepository.getAllEpidemiolozi(jsonToken.value!!) {
+                                if (!it.isNullOrEmpty()) {
+                                    SharedPrefs(application.applicationContext).save(
+                                        LOGGED_USER_EPIDEMIOLOGIST,
+                                        Common.getClosestEpidemiologist(
+                                            pacijentObject.lat,
+                                            pacijentObject.long,
+                                            it
+                                        )
+                                    )
+                                } else {
+                                    SharedPrefs(application.applicationContext).save(
+                                        LOGGED_USER_EPIDEMIOLOGIST,
+                                        HZJZ_PHONE
+                                    )
+                                }
+                            }
                             println("PACIJENT CAPTURED STATUS -----------> ${pacijentObject.status}")
                             result.value = RESULT_SUCCESS
                             loading.value = null

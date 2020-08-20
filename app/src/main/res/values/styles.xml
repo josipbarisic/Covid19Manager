@@ -82,9 +82,24 @@
         <item name="android:layout_margin">10dp</item>
     </style>
 
+    <style name="TitleTextViewStyle">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColorPrimary">@color/colorDeepBlue</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="DialogButtonStyle">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textColor">@color/colorCalmBlue</item>
+        <item name="android:background">@color/colorTransparent</item>
+    </style>
+
     <style name="TemperatureInputStyle">
         <item name="android:background">@drawable/temperature_input_drawable</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorDeepBlue</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -135,6 +150,11 @@
 
     <style name="SwitchButtonTheme" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="ToolbarStyle">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

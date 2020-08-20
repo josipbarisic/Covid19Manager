@@ -1,9 +1,6 @@
 package com.barisic.covid_19manager.modules
 
-import com.barisic.covid_19manager.interfaces.JSONWebTokenInterface
-import com.barisic.covid_19manager.interfaces.LokacijaPacijentaInterface
-import com.barisic.covid_19manager.interfaces.PacijentInterface
-import com.barisic.covid_19manager.interfaces.StanjePacijentaInterface
+import com.barisic.covid_19manager.interfaces.*
 import com.barisic.covid_19manager.util.BASE_API_URL
 import com.barisic.covid_19manager.util.JSON_TOKEN_URL
 import okhttp3.OkHttpClient
@@ -49,6 +46,10 @@ val networkModule = module {
 
     single {
         get<Retrofit>(named("BaseUrl")).create(LokacijaPacijentaInterface::class.java)
+    }
+
+    single {
+        get<Retrofit>(named("BaseUrl")).create(EpidemiologInterface::class.java)
     }
 
     single {

@@ -10,12 +10,12 @@ import android.media.MediaPlayer
 import android.os.IBinder
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import com.barisic.covid_19manager.models.LokacijaPacijenta
 import com.barisic.covid_19manager.repositories.LokacijaPacijentaRepository
 import com.barisic.covid_19manager.util.*
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.get
+import timber.log.Timber
 
 class LocationService : Service() {
     companion object {
@@ -35,7 +35,7 @@ class LocationService : Service() {
     var player: MediaPlayer? = null
 
     override fun onCreate() {
-        Log.d(LOCATION_SERVICE_TAG, "onCreate: CREATED")
+        Timber.tag(LOCATION_SERVICE_TAG).d("onCreate: CREATED")
         player = MediaPlayer.create(
             applicationContext,
             Settings.System.DEFAULT_ALARM_ALERT_URI
@@ -44,7 +44,7 @@ class LocationService : Service() {
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        Log.d(LOCATION_SERVICE_TAG, "onStartLocationUpdates: STARTED")
+        Timber.tag(LOCATION_SERVICE_TAG).d("onStartLocationUpdates: STARTED")
 
         createLocationRequest()
         fusedLocationProviderClient =
@@ -53,7 +53,7 @@ class LocationService : Service() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 isUserLogged = SharedPrefs(applicationContext).getValueBoolean(LOGGED_USER, false)
 
-                Log.d("COORDINATES", "getLocations: $userLat / $userLong")
+                Timber.d("getLocations: $userLat / $userLong")
 
                 if (isUserLogged && locationResult != null && locationResult.lastLocation != null) {
                     location = locationResult.lastLocation
@@ -66,12 +66,10 @@ class LocationService : Service() {
                         SharedPrefs(applicationContext).getValueString(LOGGED_USER_LONG)!!
                             .toString()
                             .toDouble()
-                    Log.d(
-                        LOCATION_SERVICE_TAG,
+                    Timber.tag(LOCATION_SERVICE_TAG).d(
                         "LOCATION RECEIVED -> : ${Common.getLocationText(location)}"
                     )
-                    Log.d(
-                        LOCATION_SERVICE_TAG,
+                    Timber.tag(LOCATION_SERVICE_TAG).d(
                         "onLocationResult: SHARED_PREFS USER LOGGED IN -> ${SharedPrefs(
                             applicationContext
                         )
@@ -95,7 +93,6 @@ class LocationService : Service() {
                     ) {
                         if (!player!!.isPlaying) {
                             player!!.start()
-
                         }
                         NotificationHelper.showWarningNotification(applicationContext)
                     } else {
@@ -103,7 +100,7 @@ class LocationService : Service() {
                             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                         notificationManager.cancelAll()
                     }
-                    Log.d(LOCATION_SERVICE_TAG, "GETTING TOKEN ...")
+                    Timber.tag(LOCATION_SERVICE_TAG).d("GETTING TOKEN ...")
                 } else {
                     userLat = null
                     userLong = null
@@ -118,7 +115,7 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(LOCATION_SERVICE_TAG, "onStartCommand: STARTED LOCATION SERVICE")
+        Timber.tag(LOCATION_SERVICE_TAG).d("onStartCommand: STARTED LOCATION SERVICE")
         SharedPrefs(applicationContext).save(LOCATION_SERVICE_RUNNING, true)
         startLocationUpdates()
         return START_STICKY
