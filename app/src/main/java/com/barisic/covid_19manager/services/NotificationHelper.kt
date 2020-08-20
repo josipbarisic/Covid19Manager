@@ -14,7 +14,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import com.barisic.covid_19manager.R
-import com.barisic.covid_19manager.activities.MainActivity
 import com.barisic.covid_19manager.receivers.TestingReceiver
 import com.barisic.covid_19manager.util.ACTION_START_NOTIFICATION
 
@@ -38,16 +37,10 @@ class NotificationHelper {
                 )
             val builder = getBasicNotificationBuilder(context, CHANNEL_ID, true)
             builder.setContentTitle("Upozorenje!")
-                /*.setContentText(
-                    "Lat: ${SharedPrefs(context).getValueString(LOGGED_USER_LAT)}   Long: ${SharedPrefs(
-                        context
-                    ).getValueString(
-                        LOGGED_USER_LONG
-                    )}"
-                )*/
                 .setContentText("Udaljeni ste više od 1km od mjesta prebivališta!")
                 .setOngoing(false)
-                .setContentIntent(getPendingIntentWithStack(context, MainActivity::class.java))
+                .setDefaults(Notification.DEFAULT_SOUND)
+//                .setContentIntent(getPendingIntentWithStack(context, MainActivity::class.java))
 //                .addAction(R.drawable.ic_logout, "Start", startPendingIntent)
 
             val notificationManager =

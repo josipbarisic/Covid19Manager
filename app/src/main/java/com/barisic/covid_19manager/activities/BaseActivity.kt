@@ -2,25 +2,25 @@ package com.barisic.covid_19manager.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.services.LocationService
 import com.barisic.covid_19manager.util.*
+import com.barisic.covid_19manager.util.Common.showAlertDialog
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import timber.log.Timber
 
 abstract class BaseActivity : AppCompatActivity() {
     private var locationManager: LocationManager? = null
@@ -28,9 +28,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(
-            "BASE_ACTIVITY_${this.localClassName}",
-            "onCreate: ${SharedPrefs(applicationContext).getValueString(
+        Timber.d(
+            "onCreate: ${this.localClassName} -> ${SharedPrefs(applicationContext).getValueString(
                 LOGGED_USER_OIB
             )}"
         )
@@ -47,6 +46,7 @@ abstract class BaseActivity : AppCompatActivity() {
             && !locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         ) {
             showAlertDialog(
+                this,
                 R.string.gps_network_not_enabled,
                 R.string.open_location_settings,
                 {
@@ -82,10 +82,8 @@ abstract class BaseActivity : AppCompatActivity() {
                         )
                         && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
                     ) {
-                        Log.d(
-                            LOCATION_SERVICE_TAG,
-                            "onCreate: CREATED IN APP SERVICE IN MAIN ACTIVITY"
-                        )
+                        Timber.tag(LOCATION_SERVICE_TAG)
+                            .d("onCreate: CREATED IN APP SERVICE IN MAIN ACTIVITY")
                         locationServiceIntent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
                         if (!SharedPrefs(applicationContext).getValueBoolean(
@@ -146,23 +144,5 @@ abstract class BaseActivity : AppCompatActivity() {
             applicationContext,
             permission
         ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    fun showAlertDialog(
-        message: Int,
-        positiveButtonText: Int,
-        positiveButtonFunction: () -> Unit,
-        negativeButtonText: Int,
-        title: Int
-    ) {
-        AlertDialog.Builder(this, R.style.WhiteDialogBackgroundStyle)
-            .setMessage(message)
-            .setPositiveButton(positiveButtonText) { _, _ ->
-                positiveButtonFunction()
-            }
-            .setCancelable(false)
-            .setNegativeButton(negativeButtonText, null)
-            .setTitle(title)
-            .show()
     }
 }

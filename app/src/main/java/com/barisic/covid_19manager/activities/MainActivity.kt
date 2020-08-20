@@ -2,37 +2,77 @@ package com.barisic.covid_19manager.activities
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.barisic.covid_19manager.R
-import com.barisic.covid_19manager.fragments.InfoFragment
-import com.barisic.covid_19manager.fragments.PovijestStanjaFragment
-import com.barisic.covid_19manager.fragments.StanjePacijentaFragment
 import com.barisic.covid_19manager.util.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.barisic.covid_19manager.viewmodels.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MainActivity : BaseActivity() {
 
-    private lateinit var infoFragment: InfoFragment
-    private lateinit var stanjePacijentaFragment: StanjePacijentaFragment
-    private lateinit var povijestStanjaFragment: PovijestStanjaFragment
+    private val mainViewModel: MainViewModel by viewModel()
+    private lateinit var navController: NavController
+    private lateinit var appBarConfig: AppBarConfiguration
+    private var doubleClickedBackToExit = false
+    private val logOutObserver = Observer<Boolean> {
+        if (it) {
+            SharedPrefs(applicationContext).clearSharedPreference()
+            SharedPrefs(applicationContext).save(LOGGED_USER, false).also {
+                handleLoginPrefs()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
-        infoFragment = InfoFragment()
-        stanjePacijentaFragment = StanjePacijentaFragment()
-        povijestStanjaFragment = PovijestStanjaFragment()
+        Timber.d(SharedPrefs(applicationContext).getValueString(LOGGED_USER_EPIDEMIOLOGIST))
 
-        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationSelectedListener)
+        navController = findNavController(R.id.nav_host_fragment)
+        bottomNavigation.setupWithNavController(navController)
+        appBarConfig = AppBarConfiguration(
+            setOf(
+                R.id.nav_info_fragment,
+                R.id.nav_state_fragment,
+                R.id.nav_state_history_fragment,
+                R.id.nav_log_out_dialog
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfig)
+
+//        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationSelectedListener)
         if (savedInstanceState == null) {
             checkLocationPermissions()
-            bottomNavigation.selectedItemId = R.id.nav_state
+//            bottomNavigation.selectedItemId = R.id.nav_state
         }
+
+        mainViewModel.logOut.observe(this, logOutObserver)
 
         emergencyCallBtn.setOnClickListener {
             Common.makeEmergencyCall(this)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (doubleClickedBackToExit) {
+            finish()
+        } else {
+            doubleClickedBackToExit = true
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show()
+
+            Handler().postDelayed({ doubleClickedBackToExit = false }, 2000)
         }
     }
 
@@ -46,7 +86,7 @@ class MainActivity : BaseActivity() {
                 Common.makeEmergencyCall(this)
             } else {
                 Snackbar.make(
-                    frameLayout,
+                    nav_host_fragment.requireView(),
                     getString(R.string.calling_not_enabled),
                     Snackbar.LENGTH_SHORT
                 ).show()
@@ -54,7 +94,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private val mOnNavigationSelectedListener =
+    /*private val mOnNavigationSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_info -> {
@@ -102,5 +142,5 @@ class MainActivity : BaseActivity() {
                 }
                 else -> return@OnNavigationItemSelectedListener false
             }
-        }
+        }*/
 }

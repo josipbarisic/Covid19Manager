@@ -16,10 +16,11 @@
     <!--  ALERT MESSAGES  -->
     <string name="gps_network_not_enabled">Potrebna je lokacija uređaja!</string>
     <string name="calling_not_enabled">Za poziv je potrebna dozvola!</string>
-    <string name="open_location_settings">Otvori postavke lokacije</string>
+    <string name="open_location_settings">Postavke lokacije</string>
     <string name="cancel">Odustani</string>
     <string name="log_out_message">Jeste li sigurni da se želite odjaviti?</string>
-    <string name="log_oug">Odjavi me</string>
+    <string name="log_out">Odjavi me</string>
+    <string name="medical_records_empty">Ne postoji niti jedno unešeno stanje.</string>
 
     <string name="state_title">Stanje na dan </string>
     <string name="temperature_text">Temperatura</string>
@@ -38,6 +39,6 @@
     <string name="nav_info_text">Info</string>
     <string name="nav_state_text">Stanje</string>
     <string name="nav_contact_text">Kontakt</string>
-    <string name="nav_medical_records_text">Povijest stanja</string>
+    <string name="nav_state_history_text">Povijest stanja</string>
     <string name="nav_logout_text">Odjava</string>
 </resources>

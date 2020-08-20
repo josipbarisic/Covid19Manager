@@ -82,11 +82,6 @@ class StanjePacijentaViewModel(
                             println("TOKEN RESPONSE ----> NULL")
                         }
                         else -> {
-                            stanjePacijentaRepository.getStanjaPacijenta(
-                                it, SharedPrefs(application.applicationContext).getValueString(
-                                    LOGGED_USER_ID
-                                )!!
-                            )
                             stanjePacijentaRepository.sendStanje(
                                 it,
                                 StanjePacijenta(
@@ -97,7 +92,7 @@ class StanjePacijentaViewModel(
                                     getIntFromBoolean(coughBoolean.value!!),
                                     getIntFromBoolean(fatigueBoolean.value!!),
                                     getIntFromBoolean(musclePainBoolean.value!!),
-                                    Common.getDbDate()
+                                    Common.getDateTimeLong()
                                 ),
                                 loading,
                                 errorMessage,

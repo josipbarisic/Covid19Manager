@@ -7,9 +7,6 @@ import retrofit2.http.*
 
 interface PacijentInterface {
 
-    @GET("api/pacijenti")
-    suspend fun getAllPacijenti(@Header("Authorization") token: String): ArrayList<Pacijent>
-
     @GET("api/pacijenti/{OIB}")
     fun getPacijent(
         @Header("Authorization") token: String,
