@@ -5,15 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.barisic.covid_19manager.databinding.ItemStanjePacijentaBinding
 import com.barisic.covid_19manager.models.StanjePacijenta
-import timber.log.Timber
 
 class StanjaPacijentaAdapter(private var stanjaPacijentaList: ArrayList<StanjePacijenta>) :
     RecyclerView.Adapter<StanjaPacijentaAdapter.StanjeViewHolder>() {
     private lateinit var binding: ItemStanjePacijentaBinding
-
-    init {
-        Timber.d("StanjePacijentaAdapter CREATED $itemCount")
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StanjeViewHolder {
         val inflater = LayoutInflater.from(parent.context)

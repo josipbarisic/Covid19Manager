@@ -12,37 +12,207 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/header_drawable"
-        android:padding="10dp">
+        android:background="@color/colorTransparent"
+        android:padding="15dp">
 
-        <TextView
-            android:id="@+id/korisnikId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{StanjePacijenta.korisnikIdString}"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/vrijeme"
+        <View
+            android:id="@+id/firstHolder"
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:background="@drawable/medical_record_holder"
+            android:elevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/vrijeme"
+        <View
+            android:id="@+id/secondHolder"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/medical_record_holder"
+            android:elevation="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="@{StanjePacijenta.vrijemeString2}"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/korisnikId"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="5dp"
+            android:background="@drawable/medical_record_board"
+            android:padding="25dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/medical_record_drawable"
+                android:elevation="4dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/vrijemeTv"
+                    style="@style/DateTimeStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/vrijeme"
+                    style="@style/DateTimeStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{StanjePacijenta.vrijemeString}"
+                    app:layout_constraintStart_toEndOf="@id/vrijemeTv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/crossIcon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_medical_cross"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vrijeme" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tempIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_temp"
+                    app:layout_constraintBottom_toTopOf="@id/tvCaugh"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/crossIcon" />
+
+                <TextView
+                    android:id="@+id/tvTemperature"
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temperature_text"
+                    app:layout_constraintBottom_toTopOf="@id/tvCaugh"
+                    app:layout_constraintStart_toEndOf="@id/tempIcon"
+                    app:layout_constraintTop_toBottomOf="@id/crossIcon" />
+
+                <TextView
+                    android:id="@+id/tvTempValue"
+                    style="@style/TextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:padding="0dp"
+                    android:text="@{StanjePacijenta.temperaturaString}"
+                    android:textAlignment="textEnd"
+                    app:drawableEndCompat="@drawable/ic_degree"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTemperature"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvTemperature"
+                    app:layout_constraintTop_toTopOf="@id/tvTemperature" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/coughIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_cough"
+                    app:layout_constraintBottom_toTopOf="@id/tvFatigue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTempValue" />
+
+                <TextView
+                    android:id="@+id/tvCaugh"
+                    style="@style/TextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cough_text"
+                    app:layout_constraintBottom_toTopOf="@id/tvFatigue"
+                    app:layout_constraintEnd_toStartOf="@id/tvCaughValue"
+                    app:layout_constraintStart_toEndOf="@id/coughIcon"
+                    app:layout_constraintTop_toBottomOf="@id/tvTempValue" />
+
+                <TextView
+                    android:id="@+id/tvCaughValue"
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{StanjePacijenta.kasaljString}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCaugh"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvCaugh"
+                    app:layout_constraintTop_toTopOf="@id/tvCaugh" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/fatigueIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_fatigue"
+                    app:layout_constraintBottom_toTopOf="@id/tvMusclePain"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCaugh" />
+
+                <TextView
+                    android:id="@+id/tvFatigue"
+                    style="@style/TextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fatigue_text"
+                    app:layout_constraintBottom_toTopOf="@id/tvMusclePain"
+                    app:layout_constraintEnd_toStartOf="@id/tvFatigueValue"
+                    app:layout_constraintStart_toEndOf="@id/fatigueIcon"
+                    app:layout_constraintTop_toBottomOf="@id/tvCaugh" />
+
+                <TextView
+                    android:id="@+id/tvFatigueValue"
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{StanjePacijenta.umorString}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvFatigue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvFatigue"
+                    app:layout_constraintTop_toTopOf="@id/tvFatigue" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/musclePainIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_muscle_pain"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvFatigue" />
+
+                <TextView
+                    android:id="@+id/tvMusclePain"
+                    style="@style/TextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/muscle_pain_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvMusclePainValue"
+                    app:layout_constraintStart_toEndOf="@id/musclePainIcon"
+                    app:layout_constraintTop_toBottomOf="@id/tvFatigue" />
+
+                <TextView
+                    android:id="@+id/tvMusclePainValue"
+                    style="@style/TextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{StanjePacijenta.bolUMisicimaString}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvMusclePain"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvMusclePain"
+                    app:layout_constraintTop_toTopOf="@id/tvMusclePain" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

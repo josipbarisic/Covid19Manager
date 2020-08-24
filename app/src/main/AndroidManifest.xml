@@ -26,6 +26,7 @@
         <service
             android:name=".services.LocationService"
             android:process=":LocationServiceProcess" />
+        <receiver android:name=".receivers.EpidemiologistPhoneNumberReceiver" />
 
         <activity android:name=".activities.BaseActivity" />
         <activity android:name=".activities.LoginActivity">

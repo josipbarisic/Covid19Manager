@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.databinding.FragmentInfoBinding
-import com.barisic.covid_19manager.util.LOADING
 import com.barisic.covid_19manager.viewmodels.InfoViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,12 +41,12 @@ class InfoFragment : Fragment() {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                viewModel.loading.value = LOADING
+                viewModel.loading.value = true
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                viewModel.loading.value = null
+                viewModel.loading.value = false
                 if (!loadingControlValue) {
                     webView.startAnimation(
                         AnimationUtils.loadAnimation(
@@ -88,6 +87,6 @@ class InfoFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.loading.value = LOADING
+        viewModel.loading.value = true
     }
 }

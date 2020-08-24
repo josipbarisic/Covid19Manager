@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.databinding.DialogFragmentStanjePacijentaBinding
-import com.barisic.covid_19manager.util.LOADING
 import com.barisic.covid_19manager.viewmodels.StanjePacijentaViewModel
 
 class StanjePacijentaDialogFragment(var viewModel: StanjePacijentaViewModel) : DialogFragment() {
@@ -34,14 +32,6 @@ class StanjePacijentaDialogFragment(var viewModel: StanjePacijentaViewModel) : D
             false
         )
         dataBinding.lifecycleOwner = viewLifecycleOwner
-        if (!viewModel.loading.hasObservers()) {
-            viewModel.loading.observe(dataBinding.lifecycleOwner!!, Observer {
-                when (it) {
-                    LOADING -> dataBinding.progressBar.visibility = View.VISIBLE
-                    else -> dataBinding.progressBar.visibility = View.GONE
-                }
-            })
-        }
         dataBinding.stanjePacijentaViewModel = viewModel
         return dataBinding.root
     }

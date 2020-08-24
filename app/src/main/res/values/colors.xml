@@ -4,12 +4,15 @@
     <color name="colorPrimaryDark">#0094c8</color>
     <color name="colorAccent">#8ef7ff</color>
 
-    <color name="colorDeepBlue">#222135</color>
+    <color name="colorDeepBlue">#222125</color>
     <color name="colorGrey">#7e7e7e</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorCalmWhite">#EFEFEF</color>
     <color name="colorLightGrey">#C1C1C1</color>
-    <color name="colorRed">#DD1156</color>
+    <color name="colorRed">#bd1f36</color>
     <color name="colorCalmBlue">#007193</color>
+    <color name="colorBrown">#8d6b48</color>
+    <color name="colorMetal">#cfdbd5</color>
+    <color name="colorDarkPaper">#333333</color>
 </resources>

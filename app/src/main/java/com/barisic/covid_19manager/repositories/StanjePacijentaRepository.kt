@@ -14,24 +14,23 @@ class StanjePacijentaRepository(private val stanjePacijentaService: StanjePacije
     fun sendStanje(
         token: String,
         stanje: StanjePacijenta,
-        loading: MutableLiveData<Int?>,
+        loading: MutableLiveData<Boolean>,
         errorMessage: MutableLiveData<Int?>,
         showDialogFragment: MutableLiveData<Boolean>
     ) {
-        Timber.tag("STANJE_RESPONSE").d(stanje.toString())
+        Timber.tag("SEND_STANJE").d(stanje.toString())
         stanjePacijentaService.postStanjePacijenta(token, stanje).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Timber.tag("STANJE_RESPONSE").d("onFailure: ${t.message}")
-                loading.value = null
+                loading.value = false
                 displayPopupErrorMessage(R.string.connection_error, loading, errorMessage)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 Timber.tag("STANJE_RESPONSE").d("onResponse: ${response.headers()}")
-                loading.value = null
+                loading.value = false
                 showDialogFragment.value = false
             }
-
         })
     }
 
