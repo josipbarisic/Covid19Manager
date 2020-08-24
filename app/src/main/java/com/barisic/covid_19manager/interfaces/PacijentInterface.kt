@@ -14,7 +14,8 @@ interface PacijentInterface {
     ): Call<JsonObject>
 
     @PUT("api/pacijenti/{OIB}")
-    fun updatePacijent(/*@Header("Authorization") token: String,*/@Path("OIB") oib: Long,
-                                                                  @Body pacijent: Pacijent
+    fun updatePacijent(
+        @Header("Authorization") token: String, @Path("OIB") oib: Long,
+        @Body pacijent: Pacijent
     ): Call<Void>
 }

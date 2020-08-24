@@ -23,6 +23,7 @@ class PovijestStanjaViewModel(
         get() = povijestStanjaPacijentaMLD
     val loading = MutableLiveData<Boolean>()
     val showPlaceHolder = MutableLiveData<Boolean>(false)
+    val placeHolderText = MutableLiveData<String>()
     val errorMessage = MutableLiveData<Int?>()
 
     fun getStanjaPacijenta() {
@@ -45,8 +46,13 @@ class PovijestStanjaViewModel(
                             when {
                                 stanjaPacijenta == null -> {
                                     errorMessage.value = R.string.connection_error
+                                    placeHolderText.value =
+                                        application.resources.getString(R.string.medical_records_error)
+                                    showPlaceHolder.value = true
                                 }
                                 stanjaPacijenta.isEmpty() -> {
+                                    placeHolderText.value =
+                                        application.resources.getString(R.string.medical_records_empty)
                                     showPlaceHolder.value = true
                                 }
                                 else -> povijestStanjaPacijentaMLD.value = stanjaPacijenta

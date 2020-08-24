@@ -53,6 +53,10 @@ val networkModule = module {
     }
 
     single {
+        get<Retrofit>(named("BaseUrl")).create(PorukaInterface::class.java)
+    }
+
+    single {
         get<Retrofit>(named("JsonTokenUrl")).create(JSONWebTokenInterface::class.java)
     }
 }

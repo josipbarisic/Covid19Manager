@@ -2,7 +2,6 @@ package com.barisic.covid_19manager.util
 
 import android.view.View
 import android.widget.NumberPicker
-import android.widget.ProgressBar
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -34,33 +33,14 @@ object BindingAdapter {
         when (resource != null) {
             true -> {
                 if (!textInputLayout.isVisible) {
-                    textInputLayout.animate().alpha(1.0f).duration = 500
                     textInputLayout.visibility = View.VISIBLE
                     textInputLayout.error = textInputLayout.context.getString(resource)
                 }
             }
             false -> {
                 if (textInputLayout.isVisible) {
-                    textInputLayout.animate().alpha(0.0f).duration = 500
                     textInputLayout.visibility = View.GONE
-                    textInputLayout.clearAnimation()
                 }
-            }
-        }
-    }
-
-    @BindingAdapter("setLoading")
-    @JvmStatic
-    fun setLoading(progressBar: ProgressBar, animationCode: Int?) {
-        when (animationCode == LOADING) {
-            true -> {
-                progressBar.animate().alpha(1.0f).duration = 100
-                progressBar.visibility = View.VISIBLE
-            }
-            false -> {
-                progressBar.animate().alpha(0.0f).duration = 100
-                progressBar.clearAnimation()
-                progressBar.visibility = View.GONE
             }
         }
     }
@@ -111,9 +91,9 @@ object BindingAdapter {
     @JvmStatic
     fun switchValue(switch: SwitchCompat, switchValue: MutableLiveData<Boolean>) {
         switch.setOnCheckedChangeListener { _, isChecked ->
-            run {
+
                 switchValue.value = isChecked
-            }
+
         }
     }
 }

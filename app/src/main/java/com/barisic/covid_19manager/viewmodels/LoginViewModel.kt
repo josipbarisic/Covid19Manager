@@ -29,12 +29,12 @@ class LoginViewModel(
     private var pacijent = MutableLiveData<String>()
 
     var errorMessage = MutableLiveData<Int?>()
-    var loading = MutableLiveData<Int?>()
+    var loading = MutableLiveData<Boolean>()
     var result = MutableLiveData<String?>()
 
     fun userLogin() {
         if (oibInputValidator.validateInput() && idInputValidator.validateInput()) {
-            loading.value = LOADING
+            loading.value = true
             jsonTokenRepository.getJsonToken(jsonToken)
 
             if (!jsonToken.hasObservers()) {
@@ -71,6 +71,7 @@ class LoginViewModel(
                             if (pacijentObject.status == 2) {
                                 pacijentObject.status = 1
                                 pacijentRepository.updatePacijent(
+                                    jsonToken.value!!,
                                     pacijentObject.oib,
                                     pacijentObject
                                 )
@@ -95,8 +96,9 @@ class LoginViewModel(
                             epidemiologRepository.getAllEpidemiolozi(jsonToken.value!!) {
                                 if (!it.isNullOrEmpty()) {
                                     SharedPrefs(application.applicationContext).save(
-                                        LOGGED_USER_EPIDEMIOLOGIST,
+                                        LOGGED_USER_EPIDEMIOLOGIST_NUMBER,
                                         Common.getClosestEpidemiologist(
+                                            application.applicationContext,
                                             pacijentObject.lat,
                                             pacijentObject.long,
                                             it
@@ -104,7 +106,11 @@ class LoginViewModel(
                                     )
                                 } else {
                                     SharedPrefs(application.applicationContext).save(
-                                        LOGGED_USER_EPIDEMIOLOGIST,
+                                        LOGGED_USER_EPIDEMIOLOGIST_ZZJZ,
+                                        HZJZ_NAME
+                                    )
+                                    SharedPrefs(application.applicationContext).save(
+                                        LOGGED_USER_EPIDEMIOLOGIST_NUMBER,
                                         HZJZ_PHONE
                                     )
                                 }

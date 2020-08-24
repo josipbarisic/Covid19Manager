@@ -9,6 +9,7 @@ const val OIB = "OIB"
 const val ID = "ID"
 const val TEMP = "TEMP"
 
+const val HZJZ_NAME = "Hrvatski Zavod za Javno Zdravstvo"
 const val HZJZ_PHONE = "+38598227753"
 
 const val CLIENT_ID = "client_id"
@@ -21,14 +22,12 @@ const val LOGGED_USER_OIB = "logged_user_oib"
 const val LOGGED_USER_ID = "logged_user_id"
 const val LOGGED_USER_LAT = "logged_user_lat"
 const val LOGGED_USER_LONG = "logged_user_long"
-const val LOGGED_USER_EPIDEMIOLOGIST = "logged_user_epidemiologist"
+const val LOGGED_USER_EPIDEMIOLOGIST_ZZJZ = "logged_user_epidemiologist_name"
+const val LOGGED_USER_EPIDEMIOLOGIST_NUMBER = "logged_user_epidemiologist_number"
 
 //RESULTS
 const val RESULT_SUCCESS = "SUCCESS"
 const val RESULT_ERROR = "ERROR"
-
-//ANIMATION CODES
-const val LOADING = 1
 
 //REQUEST_CODES
 const val REQUEST_LOCATION_PERMISSION = 1

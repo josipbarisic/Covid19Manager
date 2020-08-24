@@ -1,6 +1,7 @@
 package com.barisic.covid_19manager.models
 
 import com.barisic.covid_19manager.util.Common
+import timber.log.Timber
 
 data class StanjePacijenta(
     val korisnikId: Long,
@@ -11,6 +12,7 @@ data class StanjePacijenta(
     val vrijeme: Long
 ) {
     fun getKorisnikIdString(): String {
+        Timber.d(korisnikId.toString())
         return korisnikId.toString()
     }
 
@@ -32,9 +34,5 @@ data class StanjePacijenta(
 
     fun getVrijemeString(): String {
         return Common.parseLongDateToString(vrijeme)
-    }
-
-    fun getVrijemeString2(): String {
-        return vrijeme.toString()
     }
 }

@@ -14,8 +14,8 @@ import androidx.lifecycle.MutableLiveData
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.activities.BaseActivity
 import com.barisic.covid_19manager.models.Epidemiolog
+import com.barisic.covid_19manager.services.NotificationHelper
 import timber.log.Timber
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,10 +26,6 @@ object Common {
         } else {
             "${mLocation.latitude}/${mLocation.longitude}"
         }
-    }
-
-    fun getLocationTitle(): String {
-        return String.format("Location Updated: ", DateFormat.getDateInstance().format(Date()))
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -59,7 +55,7 @@ object Common {
     @SuppressLint("SimpleDateFormat")
     fun parseLongDateToString(date: Long): String {
         val inDateFormat = SimpleDateFormat("yyyyMMddHHmm")
-        val outDateFormat = SimpleDateFormat("dd.MM.yyyy. HH:mm")
+        val outDateFormat = SimpleDateFormat("dd.MM.yyyy. \nHH:mm")
         val nonParsedDate: Date? = inDateFormat.parse(date.toString())
 
         return if (nonParsedDate != null) {
@@ -90,10 +86,10 @@ object Common {
 
     fun displayPopupErrorMessage(
         resource: Int,
-        loading: MutableLiveData<Int?>,
+        loading: MutableLiveData<Boolean>,
         errorMessage: MutableLiveData<Int?>
     ) {
-        loading.value = null
+        loading.value = false
         errorMessage.value = resource
 
         //Hide after 3s
@@ -107,6 +103,8 @@ object Common {
     }
 
     fun makeEmergencyCall(activity: BaseActivity) {
+        val sharedPrefs = SharedPrefs(activity.applicationContext)
+        val epidemiologistNumber = sharedPrefs.getValueString(LOGGED_USER_EPIDEMIOLOGIST_NUMBER)
         if (ActivityCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.CALL_PHONE
@@ -118,10 +116,11 @@ object Common {
                 REQUEST_CALL
             )
         } else {
+            NotificationHelper.showEpidemiologistNotification(activity.applicationContext)
             activity.startActivity(
                 Intent(
                     Intent.ACTION_CALL,
-                    Uri.parse("tel:" + "+385976485912")
+                    Uri.parse("tel: +385976485912")
                 )
             )
         }
@@ -155,10 +154,12 @@ object Common {
     }
 
     fun getClosestEpidemiologist(
+        context: Context,
         lat: Float,
         long: Float,
         epidemiologists: ArrayList<Epidemiolog>
     ): String {
+        val sharedPrefs = SharedPrefs(context)
         var shortestLength = Float.MAX_VALUE
         var thisLength: Float
         var currentClosest: Epidemiolog? = null
@@ -173,6 +174,9 @@ object Common {
                 shortestLength = thisLength
                 currentClosest = epidemiolog
             }
+        }
+        if (currentClosest != null) {
+            sharedPrefs.save(LOGGED_USER_EPIDEMIOLOGIST_ZZJZ, currentClosest.zzjz)
         }
         return currentClosest?.brojTelefona ?: HZJZ_PHONE
     }

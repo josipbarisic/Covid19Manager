@@ -9,7 +9,10 @@ import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.models.StanjePacijenta
 import com.barisic.covid_19manager.repositories.JsonWebTokenRepository
 import com.barisic.covid_19manager.repositories.StanjePacijentaRepository
-import com.barisic.covid_19manager.util.*
+import com.barisic.covid_19manager.util.Common
+import com.barisic.covid_19manager.util.LOGGED_USER_ID
+import com.barisic.covid_19manager.util.SharedPrefs
+import com.barisic.covid_19manager.util.TOKEN_ACCESS_FAILED
 
 class StanjePacijentaViewModel(
     var application: Application,
@@ -32,23 +35,23 @@ class StanjePacijentaViewModel(
         )
     }
 
-    var coughBoolean: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+    val coughBoolean = MutableLiveData<Boolean>().apply {
         this.value = false
     }
-    var fatigueBoolean: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+    val fatigueBoolean = MutableLiveData<Boolean>().apply {
         this.value = false
     }
-    var musclePainBoolean: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+    val musclePainBoolean = MutableLiveData<Boolean>().apply {
         this.value = false
     }
 
-    var showStanjePacijentaDialog: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+    val showStanjePacijentaDialog = MutableLiveData<Boolean>().apply {
         this.value = false
     }
-    var showTemperaturePickerDialog: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply {
+    val showTemperaturePickerDialog = MutableLiveData<Boolean>().apply {
         this.value = false
     }
-    var loading = MutableLiveData<Int?>()
+    var loading = MutableLiveData<Boolean>(false)
     var errorMessage = MutableLiveData<Int?>()
 
     fun submitState() {
@@ -72,8 +75,8 @@ class StanjePacijentaViewModel(
     }
 
     fun confirmState() {
-        if (loading.value != LOADING) {
-            loading.value = LOADING
+        if (!loading.value!!) {
+            loading.value = true
             jsonTokenRepository.getJsonToken(jsonToken)
             if (!jsonToken.hasObservers()) {
                 jsonToken.observe(lifecycleOwner, Observer {

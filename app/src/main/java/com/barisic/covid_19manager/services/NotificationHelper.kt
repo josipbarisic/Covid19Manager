@@ -14,8 +14,12 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import com.barisic.covid_19manager.R
-import com.barisic.covid_19manager.receivers.TestingReceiver
+import com.barisic.covid_19manager.activities.MainActivity
+import com.barisic.covid_19manager.receivers.EpidemiologistPhoneNumberReceiver
 import com.barisic.covid_19manager.util.ACTION_START_NOTIFICATION
+import com.barisic.covid_19manager.util.LOGGED_USER_EPIDEMIOLOGIST_NUMBER
+import com.barisic.covid_19manager.util.LOGGED_USER_EPIDEMIOLOGIST_ZZJZ
+import com.barisic.covid_19manager.util.SharedPrefs
 
 class NotificationHelper {
 
@@ -26,22 +30,46 @@ class NotificationHelper {
 
 
         fun showWarningNotification(context: Context) {
-            val startIntent = Intent(context, TestingReceiver::class.java)
-            startIntent.action = ACTION_START_NOTIFICATION
-            val startPendingIntent =
-                PendingIntent.getBroadcast(
-                    context,
-                    0,
-                    startIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
             val builder = getBasicNotificationBuilder(context, CHANNEL_ID, true)
             builder.setContentTitle("Upozorenje!")
                 .setContentText("Udaljeni ste više od 1km od mjesta prebivališta!")
                 .setOngoing(false)
                 .setDefaults(Notification.DEFAULT_SOUND)
+                .setContentIntent(getPendingIntentWithStack(context, MainActivity::class.java))
+
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(CHANNEL_ID, CHANNEL_NAME, true)
+
+            notificationManager.notify(COVID_19_NID, builder.build())
+        }
+
+        fun showEpidemiologistNotification(context: Context) {
+            val sharedPrefs = SharedPrefs(context)
+            val zzjzName = sharedPrefs.getValueString(LOGGED_USER_EPIDEMIOLOGIST_ZZJZ)
+            val phoneNumber = sharedPrefs.getValueString(LOGGED_USER_EPIDEMIOLOGIST_NUMBER)
+            val message = "ZZJZ: $zzjzName\nTelefonski broj: $phoneNumber"
+
+            val numberCopyIntent = Intent(context, EpidemiologistPhoneNumberReceiver::class.java)
+            numberCopyIntent.action = ACTION_START_NOTIFICATION
+            numberCopyIntent.putExtra("phone_number", phoneNumber)
+
+            val pendingIntent =
+                PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    numberCopyIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+
+            val builder = getBasicNotificationBuilder(context, CHANNEL_ID, true)
+            builder.setContentTitle("Pozivanje najbližeg epidemiologa!")
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+                .setContentText(message)
+                .setOngoing(false)
+                .setDefaults(Notification.DEFAULT_SOUND)
 //                .setContentIntent(getPendingIntentWithStack(context, MainActivity::class.java))
-//                .addAction(R.drawable.ic_logout, "Start", startPendingIntent)
+                .addAction(R.drawable.ic_emergency_call, "Kopiraj broj epidemiologa", pendingIntent)
 
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

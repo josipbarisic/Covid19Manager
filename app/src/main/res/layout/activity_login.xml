@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="LoginViewModel"
             type="com.barisic.covid_19manager.viewmodels.LoginViewModel" />
@@ -13,19 +15,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.LoginActivity"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        tools:context=".activities.LoginActivity">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/errorLayout"
             style="@style/ErrorLayoutStyle"
+            setPopupErrorMessage="@{LoginViewModel.errorMessage}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/app_logo"
             android:visibility="gone"
-            setPopupErrorMessage="@{LoginViewModel.errorMessage}"
-            app:errorEnabled="true" />
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@id/app_logo"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
@@ -33,21 +35,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/app_logo"
+            app:layout_constraintBottom_toTopOf="@id/textInputOIB"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/errorLayout"
-            app:layout_constraintBottom_toTopOf="@id/textInputOIB"
-            android:contentDescription="@string/app_name" />
+            app:layout_constraintTop_toBottomOf="@id/errorLayout" />
 
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/app_logo"
-            app:layout_constraintBottom_toTopOf="@id/textInputOIB"
             android:progress="1"
-            setLoading="@{LoginViewModel.loading}"
-            android:visibility="gone" />
+            android:visibility="@{LoginViewModel.loading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/textInputOIB"
+            app:layout_constraintTop_toBottomOf="@id/app_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputOIB"

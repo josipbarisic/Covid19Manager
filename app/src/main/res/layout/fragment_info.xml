@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="InfoViewModel"
@@ -11,29 +14,28 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:animateLayoutChanges="true"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         tools:context=".fragments.InfoFragment">
 
         <ProgressBar
-            android:layout_height="75dp"
             android:layout_width="0dp"
+            android:layout_height="75dp"
             android:progress="1"
-            android:visibility="gone"
+            android:visibility="@{InfoViewModel.loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            setLoading="@{InfoViewModel.loading}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <WebView
             android:id="@+id/webView"
-            android:layout_height="0dp"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

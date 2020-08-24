@@ -21,6 +21,7 @@
     <string name="log_out_message">Jeste li sigurni da se želite odjaviti?</string>
     <string name="log_out">Odjavi me</string>
     <string name="medical_records_empty">Ne postoji niti jedno unešeno stanje.</string>
+    <string name="medical_records_error">Nije moguće dohvatiti povijest stanja.</string>
 
     <string name="state_title">Stanje na dan </string>
     <string name="temperature_text">Temperatura</string>
@@ -31,6 +32,7 @@
     <string name="submit_btn_text">Pošalji stanje</string>
     <string name="confirm_btn_text">Potvrdi stanje</string>
     <string name="ok_btn_text">U redu</string>
+    <string name="date_time">Datum:\nVrijeme:</string>
 
     <string name="yes">Da</string>
     <string name="no">Ne</string>
