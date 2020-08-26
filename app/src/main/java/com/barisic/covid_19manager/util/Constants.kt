@@ -7,7 +7,7 @@ const val JSON_TOKEN_URL = "https://login.microsoftonline.com/"
 //FIELDS
 const val OIB = "OIB"
 const val ID = "ID"
-const val TEMP = "TEMP"
+const val MESSAGE = "MESSAGE"
 
 const val HZJZ_NAME = "Hrvatski Zavod za Javno Zdravstvo"
 const val HZJZ_PHONE = "+38598227753"
@@ -28,6 +28,8 @@ const val LOGGED_USER_EPIDEMIOLOGIST_NUMBER = "logged_user_epidemiologist_number
 //RESULTS
 const val RESULT_SUCCESS = "SUCCESS"
 const val RESULT_ERROR = "ERROR"
+const val CREATED = 201
+const val SERVICE_UNAVAILABLE = 503
 
 //REQUEST_CODES
 const val REQUEST_LOCATION_PERMISSION = 1
@@ -48,14 +50,3 @@ const val KEY_REQUESTING_LOCATION_UPDATED = "requesting_location_update"
 //EXCEPTIONS
 const val TOKEN_ACCESS_FAILED = "TOKEN_ACCESS_FAILED"
 const val PACIENT_ACCESS_FAILED = "PACIENT_ACCESS_FAILED"
-const val SERVER_ACCESS_FAILED = "SERVER_ACCESS_FAILED"
-const val NOT_FOUND = "Error 404: Client is not found!"
-const val BAD_REQUEST = "Error 400: Server cannot process the request!"
-const val UNAUTHORIZED = "Error 401: Authentication is required or has failed!"
-const val FORBIDDEN = "Error 403: The request was valid, but the server is refusing action!"
-const val INTERNAL_SERVER_ERROR = "Error 500: Unexpected condition was encountered!"
-const val BAD_GATEWAY = "Error 502: Server received an invalid response from the upstream server!"
-const val SERVICE_UNAVAILABLE = "Error 503: Server cannot handle the request!"
-const val GATEWAY_TIMEOUT =
-    "Error 504: Server did not receive a timely response from the upstream server!"
-const val UNKNOWN = "Unknown error: try to restart the application!"

@@ -3,7 +3,6 @@ package com.barisic.covid_19manager
 import android.app.Application
 import com.barisic.covid_19manager.modules.networkModule
 import com.barisic.covid_19manager.modules.repositoryModule
-import com.barisic.covid_19manager.modules.servicesModule
 import com.barisic.covid_19manager.modules.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
@@ -24,8 +23,7 @@ class App : Application() {
                 listOf(
                     viewModelModule,
                     networkModule,
-                    repositoryModule,
-                    servicesModule
+                    repositoryModule
                 )
             )
         }

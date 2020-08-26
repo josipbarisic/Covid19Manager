@@ -10,4 +10,5 @@ val viewModelModule = module {
     viewModel { StanjePacijentaViewModel(get(), get(), get()) }
     viewModel { InfoViewModel() }
     viewModel { PovijestStanjaViewModel(get(), get(), get()) }
+    viewModel { PorukaViewModel(get(), get(), get()) }
 }

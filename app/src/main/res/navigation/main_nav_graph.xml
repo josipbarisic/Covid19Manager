@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_povijest_stanja" />
     <dialog
         android:id="@id/nav_log_out_dialog"
-        android:name="com.barisic.covid_19manager.dialogs.LogoutDialog"
+        android:name="com.barisic.covid_19manager.dialogs.LogoutDialogFragment"
         android:label="LogoutDialog"
         tools:layout="@layout/dialog_fragment_log_out">
         <action

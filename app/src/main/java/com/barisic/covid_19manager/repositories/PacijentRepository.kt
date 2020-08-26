@@ -32,7 +32,6 @@ class PacijentRepository(private val pacijentService: PacijentInterface) {
         })
     }
 
-    //RADI BEZ AUTORIZACIJE (JSON tokena)
     fun updatePacijent(token: String, oib: Long, pacijent: Pacijent) {
         pacijentService.updatePacijent(token, oib, pacijent).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {

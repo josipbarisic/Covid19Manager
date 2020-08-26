@@ -1,0 +1,78 @@
+<vector android:height="45dp"
+    android:viewportHeight="300"
+    android:viewportWidth="300"
+    android:width="45dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <clip-path android:pathData="M180,75C180,91.56 166.56,105 150,105C133.44,105 120,91.56 120,75C120,58.44 133.44,45 150,45C166.56,45 180,58.44 180,75Z" />
+        <path
+            android:fillAlpha="0"
+            android:fillColor="#FF000000"
+            android:pathData="M180,75C180,91.56 166.56,105 150,105C133.44,105 120,91.56 120,75C120,58.44 133.44,45 150,45C166.56,45 180,58.44 180,75Z"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="20" />
+    </group>
+    <group>
+        <clip-path android:pathData="M105,120C105,136.56 91.56,150 75,150C58.44,150 45,136.56 45,120C45,103.44 58.44,90 75,90C91.56,90 105,103.44 105,120Z" />
+        <path
+            android:fillAlpha="0"
+            android:fillColor="#FF000000"
+            android:pathData="M105,120C105,136.56 91.56,150 75,150C58.44,150 45,136.56 45,120C45,103.44 58.44,90 75,90C91.56,90 105,103.44 105,120Z"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="20" />
+    </group>
+    <group>
+        <clip-path android:pathData="M250,120C250,136.56 236.56,150 220,150C203.44,150 190,136.56 190,120C190,103.44 203.44,90 220,90C236.56,90 250,103.44 250,120Z" />
+        <path
+            android:fillAlpha="0"
+            android:fillColor="#FF000000"
+            android:pathData="M250,120C250,136.56 236.56,150 220,150C203.44,150 190,136.56 190,120C190,103.44 203.44,90 220,90C236.56,90 250,103.44 250,120Z"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="20" />
+    </group>
+    <group>
+        <clip-path android:pathData="M180,235C180,251.56 166.56,265 150,265C133.44,265 120,251.56 120,235C120,218.44 133.44,205 150,205C166.56,205 180,218.44 180,235Z" />
+        <path
+            android:fillAlpha="0"
+            android:fillColor="#FF000000"
+            android:pathData="M180,235C180,251.56 166.56,265 150,265C133.44,265 120,251.56 120,235C120,218.44 133.44,205 150,205C166.56,205 180,218.44 180,235Z"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="20" />
+    </group>
+    <group>
+        <clip-path android:pathData="M250,200C250,216.55 236.55,230 220,230C203.44,230 190,216.55 190,200C190,183.44 203.44,170 220,170C236.55,170 250,183.44 250,200Z" />
+        <path
+            android:fillAlpha="0"
+            android:fillColor="#FF000000"
+            android:pathData="M250,200C250,216.55 236.55,230 220,230C203.44,230 190,216.55 190,200C190,183.44 203.44,170 220,170C236.55,170 250,183.44 250,200Z"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="20" />
+    </group>
+    <group>
+        <clip-path android:pathData="M105,200C105,216.56 91.55,230 75,230C58.44,230 45,216.56 45,200C45,183.45 58.44,170 75,170C91.55,170 105,183.45 105,200Z" />
+        <path
+            android:fillAlpha="0"
+            android:fillColor="#FF000000"
+            android:pathData="M105,200C105,216.56 91.55,230 75,230C58.44,230 45,216.56 45,200C45,183.45 58.44,170 75,170C91.55,170 105,183.45 105,200Z"
+            android:strokeColor="#ffffff"
+            android:strokeWidth="20" />
+    </group>
+    <path
+        android:fillColor="@color/colorCalmBlue"
+        android:pathData="M130,155C130,160.52 125.52,165 120,165C114.48,165 110,160.52 110,155C110,149.48 114.48,145 120,145C125.52,145 130,149.48 130,155Z" />
+    <path
+        android:fillColor="@color/colorCalmBlue"
+        android:pathData="M143.67,130C143.67,135.51 139.19,140 133.67,140C128.15,140 123.67,135.51 123.67,130C123.67,124.48 128.15,120 133.67,120C139.19,120 143.67,124.48 143.67,130Z" />
+    <path
+        android:fillColor="@color/colorCalmBlue"
+        android:pathData="M143.67,180C143.67,185.52 139.19,190 133.67,190C128.15,190 123.67,185.52 123.67,180C123.67,174.48 128.15,170 133.67,170C139.19,170 143.67,174.48 143.67,180Z" />
+    <path
+        android:fillColor="@color/colorCalmBlue"
+        android:pathData="M173.67,180C173.67,185.52 169.19,190 163.67,190C158.15,190 153.67,185.52 153.67,180C153.67,174.48 158.15,170 163.67,170C169.19,170 173.67,174.48 173.67,180Z" />
+    <path
+        android:fillColor="@color/colorCalmBlue"
+        android:pathData="M188.67,155C188.67,160.51 184.19,165 178.67,165C173.15,165 168.67,160.51 168.67,155C168.67,149.48 173.15,144.99 178.67,144.99C184.19,144.99 188.67,149.48 188.67,155Z" />
+    <path
+        android:fillColor="@color/colorCalmBlue"
+        android:pathData="M172.34,130C172.34,135.52 167.86,140 162.34,140C156.82,140 152.34,135.52 152.34,130C152.34,124.48 156.82,120 162.34,120C167.86,120 172.34,124.48 172.34,130Z" />
+</vector>

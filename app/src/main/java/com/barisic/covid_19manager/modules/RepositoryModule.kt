@@ -7,6 +7,7 @@ val repositoryModule = module {
     single { PacijentRepository(get()) }
     single { EpidemiologRepository(get()) }
     single { StanjePacijentaRepository(get()) }
+    single { PorukaRepository(get()) }
     single { LokacijaPacijentaRepository(get(), get()) }
     single { JsonWebTokenRepository(get()) }
 }

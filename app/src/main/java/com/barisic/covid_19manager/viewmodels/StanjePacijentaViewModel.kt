@@ -15,7 +15,7 @@ import com.barisic.covid_19manager.util.SharedPrefs
 import com.barisic.covid_19manager.util.TOKEN_ACCESS_FAILED
 
 class StanjePacijentaViewModel(
-    var application: Application,
+    private val application: Application,
     private val jsonTokenRepository: JsonWebTokenRepository,
     private val stanjePacijentaRepository: StanjePacijentaRepository
 ) : ViewModel() {

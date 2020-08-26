@@ -15,7 +15,7 @@
         style="@style/WhiteDialogBackgroundStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".dialogs.LogoutDialog">
+        tools:context=".dialogs.LogoutDialogFragment">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/title"

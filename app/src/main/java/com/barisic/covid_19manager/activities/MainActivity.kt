@@ -3,6 +3,8 @@ package com.barisic.covid_19manager.activities
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,17 +15,23 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.databinding.ActivityMainBinding
-import com.barisic.covid_19manager.util.*
+import com.barisic.covid_19manager.dialogs.PorukaDialogFragment
+import com.barisic.covid_19manager.util.Common
+import com.barisic.covid_19manager.util.LOGGED_USER
+import com.barisic.covid_19manager.util.REQUEST_CALL
+import com.barisic.covid_19manager.util.SharedPrefs
 import com.barisic.covid_19manager.viewmodels.MainViewModel
+import com.barisic.covid_19manager.viewmodels.PorukaViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModel()
+    private val porukaViewModel: PorukaViewModel by viewModel()
+    private lateinit var porukaDialogFragment: PorukaDialogFragment
     private lateinit var navController: NavController
     private lateinit var appBarConfig: AppBarConfiguration
     private var doubleClickedBackToExit = false
@@ -43,6 +51,21 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.stanje_pacijenta_options_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_send_message -> porukaDialogFragment.show(
+                supportFragmentManager,
+                "PorukaDialogFragment"
+            )
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,7 +74,8 @@ class MainActivity : BaseActivity() {
         binding.lifecycleOwner = this
         setSupportActionBar(toolbar)
 
-        Timber.d(SharedPrefs(applicationContext).getValueString(LOGGED_USER_EPIDEMIOLOGIST_NUMBER))
+        porukaViewModel.lifecycleOwner = this
+        porukaDialogFragment = PorukaDialogFragment(porukaViewModel)
 
         navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavigation.setupWithNavController(navController)

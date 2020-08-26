@@ -15,7 +15,7 @@ import com.barisic.covid_19manager.util.Common.displayPopupErrorMessage
 import com.google.gson.GsonBuilder
 
 class LoginViewModel(
-    var application: Application,
+    private var application: Application,
     private var pacijentRepository: PacijentRepository,
     private var epidemiologRepository: EpidemiologRepository,
     private var jsonTokenRepository: JsonWebTokenRepository

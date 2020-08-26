@@ -28,9 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimaryDark"
-                android:padding="10dp"
                 android:textAlignment="textEnd"
-                app:logo="@drawable/app_logo_white"
+                app:logo="@drawable/app_logo_only_white"
                 app:titleTextColor="@color/colorWhite" />
         </com.google.android.material.appbar.AppBarLayout>
 

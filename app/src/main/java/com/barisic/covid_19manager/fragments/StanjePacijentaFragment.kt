@@ -1,7 +1,6 @@
 package com.barisic.covid_19manager.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,17 +20,20 @@ class StanjePacijentaFragment : Fragment() {
     private lateinit var binding: FragmentStanjePacijentaBinding
     private val viewModel: StanjePacijentaViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        requireContext().theme.applyStyle(R.style.WhiteDialogBackgroundStyle, true)
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_stanje_pacijenta, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,19 +43,14 @@ class StanjePacijentaFragment : Fragment() {
         binding.lifecycleOwner = this
         viewModel.lifecycleOwner = this
         viewModel.stateOnDayTitle = "${getString(R.string.state_title)} $date"
-        val stanjePacijentaDialogFragment =
-            StanjePacijentaDialogFragment(
-                viewModel
-            )
-        val temperaturePickerDialogFragment =
-            TemperaturePickerDialogFragment(
-                viewModel
-            )
+
+        val stanjePacijentaDialogFragment = StanjePacijentaDialogFragment(viewModel)
+        val temperaturePickerDialogFragment = TemperaturePickerDialogFragment(viewModel)
+
         viewModel.showStanjePacijentaDialog.observe(viewLifecycleOwner, Observer {
             if (it) {
-                Log.d("STANJE_PACIJENTA_DIALOG", "onViewCreated: $it")
                 if (!stanjePacijentaDialogFragment.isAdded) stanjePacijentaDialogFragment.show(
-                    requireFragmentManager(),
+                    requireActivity().supportFragmentManager,
                     "StanjePacijentaDialogFragment"
                 )
             } else {
@@ -65,7 +62,7 @@ class StanjePacijentaFragment : Fragment() {
         viewModel.showTemperaturePickerDialog.observe(viewLifecycleOwner, Observer {
             if (it) {
                 if (!temperaturePickerDialogFragment.isAdded) temperaturePickerDialogFragment.show(
-                    requireFragmentManager(),
+                    requireActivity().supportFragmentManager,
                     "TemperaturePickerDialogFragment"
                 )
             } else {

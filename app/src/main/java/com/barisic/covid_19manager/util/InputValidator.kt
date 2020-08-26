@@ -35,15 +35,11 @@ class InputValidator(private var inputType: String?) {
                 println("<-------VALIDATION PASSED------->")
                 return true
             }
-            TEMP -> {
-                if (displayedInputValue.value.toString().toFloat() < 33
-                    || displayedInputValue.value.toString().toFloat() > 44
-                ) {
-                    errorMsg.value = R.string.temperature_error
-                    println("TEMP_INPUT_ERROR --> TOO SHORT")
+            MESSAGE -> {
+                if (displayedInputValue.value!!.trim().isEmpty()) {
+                    errorMsg.value = R.string.mandatory_field_error
                     return false
                 }
-                println("<-------VALIDATION PASSED------->")
                 return true
             }
         }

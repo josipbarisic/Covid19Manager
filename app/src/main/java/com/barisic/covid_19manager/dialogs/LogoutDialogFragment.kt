@@ -14,7 +14,7 @@ import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.databinding.DialogFragmentLogOutBinding
 import com.barisic.covid_19manager.viewmodels.MainViewModel
 
-class LogoutDialog : DialogFragment() {
+class LogoutDialogFragment : DialogFragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: DialogFragmentLogOutBinding
 
