@@ -11,11 +11,11 @@ import com.barisic.covid_19manager.util.SharedPrefs
 import com.barisic.covid_19manager.util.TOKEN_ACCESS_FAILED
 
 class PovijestStanjaViewModel(
-    var application: Application,
+    private val application: Application,
     private val jsonTokenRepository: JsonWebTokenRepository,
     private val stanjePacijentaRepository: StanjePacijentaRepository
 ) : ViewModel() {
-    private var jsonToken = MutableLiveData<String>()
+    private val jsonToken = MutableLiveData<String>()
     lateinit var lifecycleOwner: LifecycleOwner
 
     private val povijestStanjaPacijentaMLD = MutableLiveData<ArrayList<StanjePacijenta>>()
@@ -61,14 +61,6 @@ class PovijestStanjaViewModel(
                     }
                 }
             })
-        }
-    }
-
-    fun getStringFromInt(value: Int): String {
-        return if (value == 1) {
-            application.getString(R.string.yes)
-        } else {
-            application.getString(R.string.no)
         }
     }
 }

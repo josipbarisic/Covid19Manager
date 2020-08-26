@@ -8,11 +8,13 @@ import okhttp3.FormBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class JsonWebTokenRepository(private val jsonWebTokenService: JSONWebTokenInterface) {
     private var json: JsonObject? = null
 
     fun getJsonToken(token: MutableLiveData<String>) {
+        Timber.d("GETTING_JSON_TOKEN")
         jsonWebTokenService.getToken(
             FormBody.Builder()
                 .add(
@@ -34,12 +36,12 @@ class JsonWebTokenRepository(private val jsonWebTokenService: JSONWebTokenInterf
                 .build()
         ).enqueue(object : Callback<JsonObject> {
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                println("FAILED TO GET TOKEN ----> ${t.message}")
+                Timber.d("FAILED TO GET TOKEN ----> ${t.message}")
                 token.value = TOKEN_ACCESS_FAILED
             }
 
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                println("TOKEN GRANTED ----> ${response.body()}")
+                Timber.d(response.body().toString())
                 if (response.isSuccessful) {
                     json = response.body()
                     token.value = "bearer ${json!!["access_token"].asString}"

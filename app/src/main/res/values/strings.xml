@@ -4,6 +4,11 @@
     <string name="id" translatable="false">ID (4-znamenkasti broj)</string>
     <string name="login">Prijavi se</string>
 
+    <string name="send_to_epidemiologist">Pošalji poruku epidemiologu</string>
+    <string name="message">Poruka</string>
+    <string name="message_sent">Poruka uspješno poslana!</string>
+    <string name="sending_message_failed">Slanje poruke nije uspjelo, pokušajte ponovno.</string>
+
     <!--    ERROR MESSAGES    -->
     <string name="eleven_error">Broj mora sadržavati 11 znamenki!</string>
     <string name="four_error">Broj mora sadržavati 4 znamenke!</string>
