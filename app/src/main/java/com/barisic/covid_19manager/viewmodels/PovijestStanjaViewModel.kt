@@ -9,6 +9,7 @@ import com.barisic.covid_19manager.repositories.StanjePacijentaRepository
 import com.barisic.covid_19manager.util.LOGGED_USER_ID
 import com.barisic.covid_19manager.util.SharedPrefs
 import com.barisic.covid_19manager.util.TOKEN_ACCESS_FAILED
+import timber.log.Timber
 
 class PovijestStanjaViewModel(
     private val application: Application,
@@ -22,12 +23,14 @@ class PovijestStanjaViewModel(
     val povijestStanjaPacijenta: LiveData<ArrayList<StanjePacijenta>>
         get() = povijestStanjaPacijentaMLD
     val loading = MutableLiveData<Boolean>()
-    val showPlaceHolder = MutableLiveData<Boolean>(false)
+    val showPlaceHolder = MutableLiveData(false)
     val placeHolderText = MutableLiveData<String>()
     val errorMessage = MutableLiveData<Int?>()
 
     fun getStanjaPacijenta() {
+
         loading.value = true
+        Timber.d("GETTING_STANJA")
         jsonTokenRepository.getJsonToken(jsonToken)
         if (!jsonToken.hasObservers()) {
             jsonToken.observe(lifecycleOwner, Observer {

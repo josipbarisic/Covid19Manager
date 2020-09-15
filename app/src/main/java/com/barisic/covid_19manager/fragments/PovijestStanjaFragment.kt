@@ -56,7 +56,8 @@ class PovijestStanjaFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_povijest_stanja, container, false)
         viewModel.lifecycleOwner = viewLifecycleOwner
-        viewModel.getStanjaPacijenta()
+        if (viewModel.loading.value == null && viewModel.loading.value != true)
+            viewModel.getStanjaPacijenta()
         viewModel.povijestStanjaPacijenta.observe(
             viewLifecycleOwner,
             povijestStanjaPacijentaObserver

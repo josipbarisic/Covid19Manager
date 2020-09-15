@@ -16,7 +16,7 @@ class InfoFragment : Fragment() {
 
     private lateinit var binding: FragmentInfoBinding
     private val viewModel: InfoViewModel by viewModel()
-    private var loadingControlValue = false
+    private lateinit var webView: WebView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,16 +25,16 @@ class InfoFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
         binding.infoViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        webView = binding.webView
+        webView.loadUrl("https://www.koronavirus.hr/")
+        viewModel.loading.value = true
+
         return binding.root
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingControlValue = false
-
-        val webView = binding.webView
-        webView.loadUrl("https://www.koronavirus.hr/")
 
         webView.settings.javaScriptEnabled = true
         webView.settings.builtInZoomControls = true
@@ -58,17 +58,8 @@ class InfoFragment : Fragment() {
                 super.onPageFinished(view, url)
                 viewModel.loading.value = false
             }
-
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                return true
-            }
         }
+
         webView.loadUrl("https://www.koronavirus.hr/")
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.loading.value = true
     }
 }
