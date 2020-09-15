@@ -3,7 +3,6 @@ package com.barisic.covid_19manager.viewmodels
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.models.Pacijent
@@ -38,7 +37,7 @@ class LoginViewModel(
             jsonTokenRepository.getJsonToken(jsonToken)
 
             if (!jsonToken.hasObservers()) {
-                jsonToken.observe(lifecycleOwner, Observer {
+                jsonToken.observe(lifecycleOwner, {
                     when (it) {
                         TOKEN_ACCESS_FAILED -> {
                             println("TOKEN RESPONSE ----> NULL")
@@ -58,7 +57,7 @@ class LoginViewModel(
             }
 
             if (!pacijent.hasObservers()) {
-                pacijent.observe(lifecycleOwner, Observer {
+                pacijent.observe(lifecycleOwner, {
                     if (pacijent.value != PACIENT_ACCESS_FAILED) {
                         println("PACIJENT CAPTURED -----------> ${pacijent.value.toString()}")
                         val pacijentObject = GsonBuilder().create()

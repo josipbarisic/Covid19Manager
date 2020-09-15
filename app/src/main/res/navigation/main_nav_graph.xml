@@ -20,14 +20,4 @@
         android:name="com.barisic.covid_19manager.fragments.PovijestStanjaFragment"
         android:label="@string/nav_state_history_text"
         tools:layout="@layout/fragment_povijest_stanja" />
-    <dialog
-        android:id="@id/nav_log_out_dialog"
-        android:name="com.barisic.covid_19manager.dialogs.LogoutDialogFragment"
-        android:label="LogoutDialog"
-        tools:layout="@layout/dialog_fragment_log_out">
-        <action
-            android:id="@+id/action_dismiss_nav_log_out_dialog"
-            app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true" />
-    </dialog>
 </navigation>

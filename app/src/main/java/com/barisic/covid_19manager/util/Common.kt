@@ -14,7 +14,6 @@ import androidx.lifecycle.MutableLiveData
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.activities.BaseActivity
 import com.barisic.covid_19manager.models.Epidemiolog
-import com.barisic.covid_19manager.services.NotificationHelper
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,19 +36,23 @@ object Common {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getDbDate(): Int {
-        val dateFormat = SimpleDateFormat("yyyyMMdd")
-        val date = Calendar.getInstance().time
-
-        return dateFormat.format(date).toInt()
-    }
-
-    @SuppressLint("SimpleDateFormat")
     fun getDateTimeLong(): Long {
         val dateFormat = SimpleDateFormat("yyyyMMddHHmm")
         val date = Calendar.getInstance().time
 
         return dateFormat.format(date).toLong()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getDateTimeInMillis(dateTime: Long): Long {
+        val dateFormat = SimpleDateFormat("yyyyMMddHHmm")
+        val date = dateFormat.parse(dateTime.toString())
+
+        return date!!.time / 1000
+    }
+
+    fun isMoreThan12HDifference(pastDate: Long): Boolean {
+        return getDateTimeInMillis(getDateTimeLong()) >= (getDateTimeInMillis(pastDate) + UNIX_12H)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -103,8 +106,8 @@ object Common {
     }
 
     fun makeEmergencyCall(activity: BaseActivity) {
-        val sharedPrefs = SharedPrefs(activity.applicationContext)
-        val epidemiologistNumber = sharedPrefs.getValueString(LOGGED_USER_EPIDEMIOLOGIST_NUMBER)
+        /*val sharedPrefs = SharedPrefs(activity.applicationContext)
+        val epidemiologistNumber = sharedPrefs.getValueString(LOGGED_USER_EPIDEMIOLOGIST_NUMBER)*/
         if (ActivityCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.CALL_PHONE

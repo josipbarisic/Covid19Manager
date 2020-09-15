@@ -37,7 +37,6 @@ class PovijestStanjaViewModel(
                     }
                     else -> {
                         stanjePacijentaRepository.getStanjaPacijenta(
-                            it,
                             SharedPrefs(application.applicationContext).getValueString(
                                 LOGGED_USER_ID
                             )!!

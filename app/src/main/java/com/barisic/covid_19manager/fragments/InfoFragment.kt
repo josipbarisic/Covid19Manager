@@ -1,11 +1,8 @@
 package com.barisic.covid_19manager.fragments
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.*
-import android.view.animation.AnimationUtils
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
@@ -27,7 +24,7 @@ class InfoFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
         binding.infoViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -38,40 +35,12 @@ class InfoFragment : Fragment() {
 
         val webView = binding.webView
         webView.loadUrl("https://www.koronavirus.hr/")
-        webView.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                viewModel.loading.value = true
-            }
 
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                viewModel.loading.value = false
-                if (!loadingControlValue) {
-                    webView.startAnimation(
-                        AnimationUtils.loadAnimation(
-                            requireContext(),
-                            android.R.anim.slide_in_left
-                        )
-                    )
-                    loadingControlValue = true
-                    webView.visibility = View.VISIBLE
-                }
-            }
-
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                super.shouldOverrideUrlLoading(view, request)
-                return false
-            }
-        }
         webView.settings.javaScriptEnabled = true
         webView.settings.builtInZoomControls = true
         webView.settings.displayZoomControls = false
         webView.settings.useWideViewPort = true
-        webView.loadUrl("https://www.koronavirus.hr/")
+
         webView.canGoBack()
         webView.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK
@@ -82,6 +51,19 @@ class InfoFragment : Fragment() {
             }
             return@setOnKeyListener true
         }
+
+        webView.webViewClient = object : WebViewClient() {
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                viewModel.loading.value = false
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                return true
+            }
+        }
+        webView.loadUrl("https://www.koronavirus.hr/")
     }
 
 

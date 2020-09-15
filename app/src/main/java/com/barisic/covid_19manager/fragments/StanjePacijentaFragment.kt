@@ -20,9 +20,38 @@ class StanjePacijentaFragment : Fragment() {
     private lateinit var binding: FragmentStanjePacijentaBinding
     private val viewModel: StanjePacijentaViewModel by viewModel()
 
+    private lateinit var stanjePacijentaDialogFragment: StanjePacijentaDialogFragment
+    private lateinit var temperaturePickerDialogFragment: TemperaturePickerDialogFragment
+
+    private val showStanjePacijentaDialogObserver = Observer<Boolean> {
+        if (it) {
+            if (!stanjePacijentaDialogFragment.isAdded) stanjePacijentaDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                "StanjePacijentaDialogFragment"
+            )
+        } else {
+            if (stanjePacijentaDialogFragment.isVisible) {
+                stanjePacijentaDialogFragment.dismiss()
+            }
+        }
+    }
+    private val showTemperaturePickerDialogFragmentObserver = Observer<Boolean> {
+        if (it) {
+            if (!temperaturePickerDialogFragment.isAdded) temperaturePickerDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                "TemperaturePickerDialogFragment"
+            )
+        } else {
+            if (temperaturePickerDialogFragment.isVisible) {
+                temperaturePickerDialogFragment.dismiss()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
+        stanjePacijentaDialogFragment = StanjePacijentaDialogFragment(viewModel)
+        temperaturePickerDialogFragment = TemperaturePickerDialogFragment(viewModel)
     }
 
     override fun onCreateView(
@@ -38,39 +67,17 @@ class StanjePacijentaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val date = Common.getDate()
-
-        binding.lifecycleOwner = this
-        viewModel.lifecycleOwner = this
-        viewModel.stateOnDayTitle = "${getString(R.string.state_title)} $date"
-
-        val stanjePacijentaDialogFragment = StanjePacijentaDialogFragment(viewModel)
-        val temperaturePickerDialogFragment = TemperaturePickerDialogFragment(viewModel)
-
-        viewModel.showStanjePacijentaDialog.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                if (!stanjePacijentaDialogFragment.isAdded) stanjePacijentaDialogFragment.show(
-                    requireActivity().supportFragmentManager,
-                    "StanjePacijentaDialogFragment"
-                )
-            } else {
-                if (stanjePacijentaDialogFragment.isVisible) {
-                    stanjePacijentaDialogFragment.dismiss()
-                }
-            }
-        })
-        viewModel.showTemperaturePickerDialog.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                if (!temperaturePickerDialogFragment.isAdded) temperaturePickerDialogFragment.show(
-                    requireActivity().supportFragmentManager,
-                    "TemperaturePickerDialogFragment"
-                )
-            } else {
-                if (temperaturePickerDialogFragment.isVisible) {
-                    temperaturePickerDialogFragment.dismiss()
-                }
-            }
-        })
+        binding.lifecycleOwner = viewLifecycleOwner
+        viewModel.lifecycleOwner = viewLifecycleOwner
+        viewModel.stateOnDayTitle = "${getString(R.string.state_title)} ${Common.getDate()}"
+        viewModel.showStanjePacijentaDialog.observe(
+            viewLifecycleOwner,
+            showStanjePacijentaDialogObserver
+        )
+        viewModel.showTemperaturePickerDialog.observe(
+            viewLifecycleOwner,
+            showTemperaturePickerDialogFragmentObserver
+        )
         binding.stanjePacijentaViewModel = viewModel
     }
 

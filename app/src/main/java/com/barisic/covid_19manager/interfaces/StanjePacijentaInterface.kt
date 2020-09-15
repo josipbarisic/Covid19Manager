@@ -13,8 +13,5 @@ interface StanjePacijentaInterface {
     ): Call<Void>
 
     @GET("api/stanja/GetStanjaByID/{ID}")
-    fun getStanjaById(
-        @Header("Authorization") token: String,
-        @Path("ID") oib: String
-    ): Call<ArrayList<StanjePacijenta>>
+    fun getStanjaById(@Path("ID") oib: String): Call<ArrayList<StanjePacijenta>>
 }

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -15,6 +17,7 @@ import com.barisic.covid_19manager.viewmodels.PorukaViewModel
 
 class PorukaDialogFragment(private val viewModel: PorukaViewModel) : DialogFragment() {
     private lateinit var dataBinding: DialogFragmentPorukaBinding
+
     private val responseObserver = Observer<Int?> {
         it?.let {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
@@ -25,6 +28,15 @@ class PorukaDialogFragment(private val viewModel: PorukaViewModel) : DialogFragm
         if (it) {
             this.dismiss()
             viewModel.closeDialog.value = false
+        }
+    }
+    private val onEditorActionListener = TextView.OnEditorActionListener { _, actionId, _ ->
+        return@OnEditorActionListener when (actionId) {
+            EditorInfo.IME_ACTION_SEND -> {
+                viewModel.sendMessage()
+                true
+            }
+            else -> false
         }
     }
 
@@ -50,6 +62,7 @@ class PorukaDialogFragment(private val viewModel: PorukaViewModel) : DialogFragm
         viewModel.lifecycleOwner = viewLifecycleOwner
         viewModel.response.observe(viewLifecycleOwner, responseObserver)
         viewModel.closeDialog.observe(viewLifecycleOwner, closeDialogObserver)
+        dataBinding.etPoruka.setOnEditorActionListener(onEditorActionListener)
 
         return dataBinding.root
     }

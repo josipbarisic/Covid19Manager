@@ -65,8 +65,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/message"
-                android:inputType="textMultiLine"
+                android:inputType="textShortMessage"
                 android:maxLength="150"
+                android:imeOptions="actionSend"
                 android:maxLines="10"
                 android:text="@={PorukaViewModel.message.inputValue}" />
 

@@ -3,7 +3,6 @@ package com.barisic.covid_19manager.viewmodels
 import android.app.Application
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.models.StanjePacijenta
@@ -35,23 +34,13 @@ class StanjePacijentaViewModel(
         )
     }
 
-    val coughBoolean = MutableLiveData<Boolean>().apply {
-        this.value = false
-    }
-    val fatigueBoolean = MutableLiveData<Boolean>().apply {
-        this.value = false
-    }
-    val musclePainBoolean = MutableLiveData<Boolean>().apply {
-        this.value = false
-    }
+    val coughBoolean = MutableLiveData(false)
+    val fatigueBoolean = MutableLiveData(false)
+    val musclePainBoolean = MutableLiveData(false)
 
-    val showStanjePacijentaDialog = MutableLiveData<Boolean>().apply {
-        this.value = false
-    }
-    val showTemperaturePickerDialog = MutableLiveData<Boolean>().apply {
-        this.value = false
-    }
-    var loading = MutableLiveData<Boolean>(false)
+    val showStanjePacijentaDialog = MutableLiveData(false)
+    val showTemperaturePickerDialog = MutableLiveData(false)
+    var loading = MutableLiveData(false)
     var errorMessage = MutableLiveData<Int?>()
 
     fun submitState() {
@@ -79,7 +68,7 @@ class StanjePacijentaViewModel(
             loading.value = true
             jsonTokenRepository.getJsonToken(jsonToken)
             if (!jsonToken.hasObservers()) {
-                jsonToken.observe(lifecycleOwner, Observer {
+                jsonToken.observe(lifecycleOwner, {
                     when (it) {
                         TOKEN_ACCESS_FAILED -> {
                             println("TOKEN RESPONSE ----> NULL")

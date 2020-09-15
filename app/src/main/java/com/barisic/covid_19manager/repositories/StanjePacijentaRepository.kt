@@ -35,11 +35,10 @@ class StanjePacijentaRepository(private val stanjePacijentaService: StanjePacije
     }
 
     fun getStanjaPacijenta(
-        token: String,
         id: String,
         responseCallback: (result: ArrayList<StanjePacijenta>?) -> Unit
     ) {
-        stanjePacijentaService.getStanjaById(token, id)
+        stanjePacijentaService.getStanjaById(id)
             .enqueue(object : Callback<ArrayList<StanjePacijenta>> {
                 override fun onResponse(
                     call: Call<ArrayList<StanjePacijenta>>,

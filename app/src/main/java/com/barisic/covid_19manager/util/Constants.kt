@@ -12,6 +12,9 @@ const val MESSAGE = "MESSAGE"
 const val HZJZ_NAME = "Hrvatski Zavod za Javno Zdravstvo"
 const val HZJZ_PHONE = "+38598227753"
 
+const val UNIX_12H = 43200
+const val STANJE_PACIJENTA_UPWT = "StanjePacijentaUniquePeriodicWorkTag"
+
 const val CLIENT_ID = "client_id"
 const val SCOPE = "scope"
 const val CLIENT_SECRET = "client_secret"
@@ -35,12 +38,12 @@ const val SERVICE_UNAVAILABLE = 503
 const val REQUEST_LOCATION_PERMISSION = 1
 const val REQUEST_CALL = 385
 
-//NOTIFICATIONS
-const val ACTION_START_NOTIFICATION = "START_NOTIFICATION"
-
 //ACTIONS
 const val ACTION_LOCATION = "ACTION_LOCATION"
 const val LOCATION_SERVICE_RUNNING = "location_service_running"
+const val ACTION_OPEN_STANJE_PACIJENTA = "OPEN_STANJE_PACIJENTA"
+const val ACTION_COPY_PHONE_NUMBER = "ACTION_COPY_PHONE_NUMBER"
+const val ACTION_MUTE_ALARM = "ACTION_MUTE_ALARM"
 
 //LOCATION
 const val LOCATION_SERVICE_TAG = "LOCATION_SERVICE"

@@ -29,7 +29,9 @@
         <receiver android:name=".receivers.EpidemiologistPhoneNumberReceiver" />
 
         <activity android:name=".activities.BaseActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,6 +40,7 @@
         </activity>
         <activity
             android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
     </application>
 

@@ -1,9 +1,7 @@
 package com.barisic.covid_19manager.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,10 +12,8 @@ import com.barisic.covid_19manager.databinding.FragmentPovijestStanjaBinding
 import com.barisic.covid_19manager.models.StanjePacijenta
 import com.barisic.covid_19manager.viewmodels.PovijestStanjaViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_povijest_stanja.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.util.*
 
 class PovijestStanjaFragment : Fragment() {
 
@@ -30,13 +26,25 @@ class PovijestStanjaFragment : Fragment() {
             Timber.d("${stanjePacijenta.korisnikId} ${stanjePacijenta.vrijeme} ${stanjePacijenta.temperatura}")
         }
         stanjaPacijentaAdapter = StanjaPacijentaAdapter(it)
-        binding.rvStanjaPacijenta.adapter = stanjaPacijentaAdapter
-        stanjaPacijentaAdapter.notifyDataSetChanged()
+        stanjaPacijentaAdapter.notifyDataSetChanged().apply {
+            setupRecyclerView()
+        }
+        setHasOptionsMenu(true)
     }
 
     private val errorMessageObserver = Observer<Int?> {
         it?.let {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.povijest_stanja_options_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+
+        menu.findItem(R.id.nav_reverse_order).setOnMenuItemClickListener {
+            stanjaPacijentaAdapter.reverseListOrder()
+            return@setOnMenuItemClickListener true
         }
     }
 
@@ -48,22 +56,24 @@ class PovijestStanjaFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_povijest_stanja, container, false)
         viewModel.lifecycleOwner = viewLifecycleOwner
+        viewModel.getStanjaPacijenta()
+        viewModel.povijestStanjaPacijenta.observe(
+            viewLifecycleOwner,
+            povijestStanjaPacijentaObserver
+        )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.povijestStanjaViewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
-        rvStanjaPacijenta.layoutManager = LinearLayoutManager(requireContext())
-
-        viewModel.getStanjaPacijenta()
-
-        viewModel.povijestStanjaPacijenta.observe(
-            viewLifecycleOwner,
-            povijestStanjaPacijentaObserver
-        )
         viewModel.errorMessage.observe(viewLifecycleOwner, errorMessageObserver)
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvStanjaPacijenta.adapter = stanjaPacijentaAdapter
+        binding.rvStanjaPacijenta.layoutManager = LinearLayoutManager(requireContext())
     }
 }

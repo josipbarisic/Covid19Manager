@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { LoginViewModel(get(), get(), get(), get()) }
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(get()) }
     viewModel { StanjePacijentaViewModel(get(), get(), get()) }
     viewModel { InfoViewModel() }
     viewModel { PovijestStanjaViewModel(get(), get(), get()) }

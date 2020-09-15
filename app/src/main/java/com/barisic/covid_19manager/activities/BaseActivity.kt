@@ -13,8 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.services.LocationService
-import com.barisic.covid_19manager.util.*
 import com.barisic.covid_19manager.util.Common.showAlertDialog
+import com.barisic.covid_19manager.util.LOCATION_SERVICE_RUNNING
+import com.barisic.covid_19manager.util.LOCATION_SERVICE_TAG
+import com.barisic.covid_19manager.util.LOGGED_USER
+import com.barisic.covid_19manager.util.SharedPrefs
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -28,11 +31,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.d(
-            "onCreate: ${this.localClassName} -> ${SharedPrefs(applicationContext).getValueString(
-                LOGGED_USER_OIB
-            )}"
-        )
         locationServiceIntent = Intent(applicationContext, LocationService::class.java)
         handleLoginPrefs()
         locationManager =

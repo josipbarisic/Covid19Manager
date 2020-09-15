@@ -48,4 +48,14 @@
     <string name="nav_contact_text">Kontakt</string>
     <string name="nav_state_history_text">Povijest stanja</string>
     <string name="nav_logout_text">Odjava</string>
+
+    <!--  NOTIFICATIONS  -->
+    <string name="warning">Upozorenje!</string>
+    <string name="distance_warning_message">Udaljeni ste više od 1km od mjesta prebivališta!</string>
+    <string name="phone_number">Telefonski broj</string>
+    <string name="calling_closest_epidemiologist">Pozivanje najbližeg epidemiologa!</string>
+    <string name="copy_epidemiologist_number">Kopiraj broj epidemiologa</string>
+    <string name="update_state">Potrebno je ažurirati stanje!</string>
+    <string name="more_than_12_hours_passed">Proteklo je više od 12 sati od zadnjeg upisa stanja!</string>
+    <string name="mute_alarm">Ugasi alarm</string>
 </resources>

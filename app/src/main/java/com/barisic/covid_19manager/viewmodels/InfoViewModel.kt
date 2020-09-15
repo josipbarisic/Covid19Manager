@@ -4,5 +4,5 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class InfoViewModel : ViewModel() {
-    val loading = MutableLiveData<Boolean>(true)
+    val loading = MutableLiveData(true)
 }

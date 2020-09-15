@@ -7,20 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.databinding.DialogFragmentLogOutBinding
 import com.barisic.covid_19manager.viewmodels.MainViewModel
 
-class LogoutDialogFragment : DialogFragment() {
-    private val mainViewModel: MainViewModel by activityViewModels()
+class LogoutDialogFragment(private val mainViewModel: MainViewModel) : DialogFragment() {
     private lateinit var binding: DialogFragmentLogOutBinding
 
     private val cancelLogOutObserver = Observer<Boolean> {
         if (it) {
-            findNavController().navigate(R.id.action_dismiss_nav_log_out_dialog)
+            dismiss()
             mainViewModel.cancelLogOut.value = false
         }
     }
