@@ -1,9 +1,7 @@
 package com.barisic.covid_19manager.services
 
 import android.annotation.SuppressLint
-import android.app.NotificationManager
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.media.RingtoneManager
@@ -13,13 +11,18 @@ import com.barisic.covid_19manager.models.LokacijaPacijenta
 import com.barisic.covid_19manager.repositories.LokacijaPacijentaRepository
 import com.barisic.covid_19manager.util.*
 import com.google.android.gms.location.*
-import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 class LocationService : Service() {
     companion object {
+        private var isRunning = false
         private const val UPDATE_INTERVAL_MS: Long = 1000 * 60 * 15
         private const val FASTEST_UPDATE_INTERVAL_MS: Long = UPDATE_INTERVAL_MS / 2
+
+        fun isServiceRunning(): Boolean {
+            return isRunning
+        }
     }
 
     private var locationRequest: LocationRequest? = null
@@ -31,8 +34,12 @@ class LocationService : Service() {
     private var userLat: Double? = null
     private var userLong: Double? = null
 
+    private lateinit var sharedPrefs: SharedPrefs
+    private val lokacijaPacijentaRepo: LokacijaPacijentaRepository by inject()
+
     override fun onCreate() {
         Timber.tag(LOCATION_SERVICE_TAG).d("onCreate: CREATED")
+        sharedPrefs = SharedPrefs(applicationContext)
     }
 
     @SuppressLint("MissingPermission")
@@ -53,8 +60,8 @@ class LocationService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Timber.tag(LOCATION_SERVICE_TAG).d("onStartCommand: STARTED LOCATION SERVICE")
-        SharedPrefs(applicationContext).save(LOCATION_SERVICE_RUNNING, true)
         startLocationUpdates()
+        isRunning = true
         return START_STICKY
     }
 
@@ -69,31 +76,19 @@ class LocationService : Service() {
     private fun createLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
-                isUserLogged = SharedPrefs(applicationContext).getValueBoolean(LOGGED_USER, false)
+                isUserLogged = sharedPrefs.getValueBoolean(LOGGED_USER, false)
+                userId = sharedPrefs.getValueString(LOGGED_USER_ID)!!.toLong()
+                userLat = sharedPrefs.getValueString(LOGGED_USER_LAT)!!.toString().toDouble()
+                userLong = sharedPrefs.getValueString(LOGGED_USER_LONG)!!.toString().toDouble()
+
+                Timber.tag(LOCATION_SERVICE_TAG).d("IS_RUNNING -> ${isServiceRunning()}")
 
                 if (isUserLogged && locationResult != null && locationResult.lastLocation != null) {
                     location = locationResult.lastLocation
-                    userId =
-                        SharedPrefs(applicationContext).getValueString(LOGGED_USER_ID)!!.toLong()
-                    userLat =
-                        SharedPrefs(applicationContext).getValueString(LOGGED_USER_LAT)!!.toString()
-                            .toDouble()
-                    userLong =
-                        SharedPrefs(applicationContext).getValueString(LOGGED_USER_LONG)!!
-                            .toString()
-                            .toDouble()
                     Timber.tag(LOCATION_SERVICE_TAG).d(
-                        "LOCATION RECEIVED -> : ${Common.getLocationText(location)}"
+                        "LOCATION RECEIVED -> : ${Common.getLocationText(location)} FOR USER $userId"
                     )
-                    Timber.tag(LOCATION_SERVICE_TAG).d(
-                        "onLocationResult: SHARED_PREFS USER LOGGED IN -> ${
-                            SharedPrefs(
-                                applicationContext
-                            )
-                                .getValueBoolean(LOGGED_USER, false)
-                        }"
-                    )
-                    LokacijaPacijentaRepository(get(), get()).sendLokacija(
+                    lokacijaPacijentaRepo.sendLokacija(
                         LokacijaPacijenta(
                             userId!!,
                             location!!.latitude.toFloat(),
@@ -115,14 +110,7 @@ class LocationService : Service() {
                             ringtone.play()
                         }
                         NotificationHelper.showDistanceWarningNotification(applicationContext)
-                    } else {
-                        val notificationManager =
-                            applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                        notificationManager.cancelAll()
                     }
-                } else {
-                    userLat = null
-                    userLong = null
                 }
             }
         }
@@ -134,6 +122,7 @@ class LocationService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        SharedPrefs(applicationContext).save(LOCATION_SERVICE_RUNNING, false)
+        Timber.tag(LOCATION_SERVICE_TAG).d("SERVICE DESTROYED")
+        isRunning = false
     }
 }

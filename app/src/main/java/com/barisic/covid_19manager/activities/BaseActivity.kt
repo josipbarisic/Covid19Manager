@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.services.LocationService
 import com.barisic.covid_19manager.util.Common.showAlertDialog
-import com.barisic.covid_19manager.util.LOCATION_SERVICE_RUNNING
 import com.barisic.covid_19manager.util.LOCATION_SERVICE_TAG
 import com.barisic.covid_19manager.util.LOGGED_USER
 import com.barisic.covid_19manager.util.SharedPrefs
@@ -28,10 +27,14 @@ import timber.log.Timber
 abstract class BaseActivity : AppCompatActivity() {
     private var locationManager: LocationManager? = null
     var locationServiceIntent: Intent? = null
+    private lateinit var sharedPrefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Timber.tag(LOCATION_SERVICE_TAG)
+            .d("IS_RUNNING in BASE activity -> ${LocationService.isServiceRunning()}")
         locationServiceIntent = Intent(applicationContext, LocationService::class.java)
+        sharedPrefs = SharedPrefs(applicationContext)
         handleLoginPrefs()
         locationManager =
             applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -80,22 +83,11 @@ abstract class BaseActivity : AppCompatActivity() {
                         )
                         && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
                     ) {
-                        Timber.tag(LOCATION_SERVICE_TAG)
-                            .d("onCreate: CREATED IN APP SERVICE IN MAIN ACTIVITY")
                         locationServiceIntent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-                        if (!SharedPrefs(applicationContext).getValueBoolean(
-                                LOCATION_SERVICE_RUNNING,
-                                false
-                            )
-                        ) {
-
-                            startService(locationServiceIntent)
-                        } else {
-                            stopService(locationServiceIntent)
+                        if (!LocationService.isServiceRunning()) {
                             startService(locationServiceIntent)
                         }
-
                     }
                 }
 
@@ -114,7 +106,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun handleLoginPrefs(): Boolean {
-        if (SharedPrefs(applicationContext).getValueBoolean(
+        if (sharedPrefs.getValueBoolean(
                 LOGGED_USER,
                 false
             ) && this.javaClass.simpleName == "LoginActivity"
@@ -123,7 +115,7 @@ abstract class BaseActivity : AppCompatActivity() {
             i.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(i)
             finish()
-        } else if (!SharedPrefs(applicationContext).getValueBoolean(
+        } else if (!sharedPrefs.getValueBoolean(
                 LOGGED_USER,
                 false
             ) && this.javaClass.simpleName == "MainActivity"

@@ -29,6 +29,8 @@ const val LOGGED_USER_LONG = "user_long"
 const val LOGGED_USER_EPIDEMIOLOGIST_ZZJZ = "logged_user_epidemiologist_name"
 const val LOGGED_USER_EPIDEMIOLOGIST_NUMBER = "logged_user_epidemiologist_number"
 
+const val SHARED_PREFS = "SHARED_PREFS"
+
 //RESULTS
 const val CREATED = 201
 const val ON_RESPONSE = "onResponse"
@@ -38,7 +40,6 @@ const val ON_FAILURE = "onFailure"
 const val REQUEST_CALL = 385
 
 //ACTIONS
-const val LOCATION_SERVICE_RUNNING = "location_service_running"
 const val ACTION_OPEN_STANJE_PACIJENTA = "OPEN_STANJE_PACIJENTA"
 const val ACTION_COPY_PHONE_NUMBER = "ACTION_COPY_PHONE_NUMBER"
 
