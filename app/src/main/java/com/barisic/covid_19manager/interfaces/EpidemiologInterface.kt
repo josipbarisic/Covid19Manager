@@ -6,8 +6,6 @@ import retrofit2.http.GET
 import java.util.*
 
 interface EpidemiologInterface {
-
     @GET("api/epidemiolozi")
     fun getAllEpidemiolozi(): Call<ArrayList<Epidemiolog>>
-
 }

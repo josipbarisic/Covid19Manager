@@ -2,7 +2,6 @@ package com.barisic.covid_19manager.util
 
 //CONNECTIONS
 const val BASE_API_URL = "http://192.168.43.186:45455/"
-const val JSON_TOKEN_URL = "https://login.microsoftonline.com/"
 
 //FIELDS
 const val OIB = "OIB"
