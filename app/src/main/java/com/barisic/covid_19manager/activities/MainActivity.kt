@@ -75,7 +75,6 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
 
         logOutDialog = LogoutDialogFragment(viewModel)
-        porukaViewModel.lifecycleOwner = this
         porukaDialogFragment = PorukaDialogFragment(porukaViewModel)
 
         navController = findNavController(R.id.nav_host_fragment)

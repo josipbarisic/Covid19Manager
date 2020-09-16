@@ -11,5 +11,5 @@ val viewModelModule = module {
     viewModel { StanjePacijentaViewModel(androidContext(), get()) }
     viewModel { InfoViewModel() }
     viewModel { PovijestStanjaViewModel(androidContext(), get()) }
-    viewModel { PorukaViewModel(get(), get(), get()) }
+    viewModel { PorukaViewModel(androidContext(), get()) }
 }
