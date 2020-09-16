@@ -6,7 +6,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { LoginViewModel(get(), get(), get(), get()) }
+    viewModel { LoginViewModel(androidContext(), get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { StanjePacijentaViewModel(androidContext(), get()) }
     viewModel { InfoViewModel() }

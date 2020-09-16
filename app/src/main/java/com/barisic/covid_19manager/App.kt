@@ -15,8 +15,6 @@ class App : Application() {
 
         Timber.plant(Timber.DebugTree())
 
-//        registerReceiver(TestingReceiver(), IntentFilter(Intent.ACTION_SCREEN_OFF))
-
         startKoin {
             androidContext(this@App)
             loadKoinModules(
