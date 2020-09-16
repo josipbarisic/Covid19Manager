@@ -80,7 +80,7 @@ class MainActivity : BaseActivity() {
         navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavigation.setupWithNavController(navController)
         binding.bottomNavigation.menu.getItem(4).setOnMenuItemClickListener {
-            if (it.itemId == R.id.nav_log_out_dialog) {
+            if (it.itemId == R.id.nav_log_out_dialog && !logOutDialog.isVisible) {
                 Timber.d("CLICKED LOG_OUT")
                 logOutDialog.show(supportFragmentManager, "LogOutDialogFragment")
             }
