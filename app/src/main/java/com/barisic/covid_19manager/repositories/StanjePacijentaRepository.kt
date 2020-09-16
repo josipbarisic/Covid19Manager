@@ -1,10 +1,7 @@
 package com.barisic.covid_19manager.repositories
 
-import androidx.lifecycle.MutableLiveData
-import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.interfaces.StanjePacijentaInterface
 import com.barisic.covid_19manager.models.StanjePacijenta
-import com.barisic.covid_19manager.util.Common.displayPopupErrorMessage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,24 +9,21 @@ import timber.log.Timber
 
 class StanjePacijentaRepository(private val stanjePacijentaService: StanjePacijentaInterface) {
     fun sendStanje(
-        token: String,
         stanje: StanjePacijenta,
-        loading: MutableLiveData<Boolean>,
-        errorMessage: MutableLiveData<Int?>,
-        showDialogFragment: MutableLiveData<Boolean>
+        responseCallback: (result: Boolean) -> Unit
     ) {
         Timber.tag("SEND_STANJE").d(stanje.toString())
-        stanjePacijentaService.postStanjePacijenta(token, stanje).enqueue(object : Callback<Void> {
+        stanjePacijentaService.sendStanjePacijenta(stanje).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Timber.tag("STANJE_RESPONSE").d("onFailure: ${t.message}")
-                loading.value = false
-                displayPopupErrorMessage(R.string.connection_error, loading, errorMessage)
+                responseCallback(false)
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                Timber.tag("STANJE_RESPONSE").d("onResponse: ${response.headers()}")
-                loading.value = false
-                showDialogFragment.value = false
+                if (response.isSuccessful)
+                    responseCallback(true)
+                else
+                    responseCallback(false)
             }
         })
     }

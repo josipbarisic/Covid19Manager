@@ -2,7 +2,6 @@ package com.barisic.covid_19manager.modules
 
 import com.barisic.covid_19manager.interfaces.*
 import com.barisic.covid_19manager.util.BASE_API_URL
-import com.barisic.covid_19manager.util.JSON_TOKEN_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -28,14 +27,6 @@ val networkModule = module {
             .build()
     }
 
-    single(qualifier = named("JsonTokenUrl")) {
-        Retrofit.Builder()
-            .client(get())
-            .baseUrl(JSON_TOKEN_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     single {
         get<Retrofit>(named("BaseUrl")).create(PacijentInterface::class.java)
     }
@@ -54,9 +45,5 @@ val networkModule = module {
 
     single {
         get<Retrofit>(named("BaseUrl")).create(PorukaInterface::class.java)
-    }
-
-    single {
-        get<Retrofit>(named("JsonTokenUrl")).create(JSONWebTokenInterface::class.java)
     }
 }

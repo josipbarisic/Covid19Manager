@@ -51,8 +51,8 @@ object Common {
         return date!!.time / 1000
     }
 
-    fun isMoreThan12HDifference(pastDate: Long): Boolean {
-        return getDateTimeInMillis(getDateTimeLong()) >= (getDateTimeInMillis(pastDate) + UNIX_12H)
+    fun isMoreThanGivenMillisDifference(pastDate: Long, millis: Long): Boolean {
+        return getDateTimeInMillis(getDateTimeLong()) >= (getDateTimeInMillis(pastDate) + millis)
     }
 
     @SuppressLint("SimpleDateFormat")

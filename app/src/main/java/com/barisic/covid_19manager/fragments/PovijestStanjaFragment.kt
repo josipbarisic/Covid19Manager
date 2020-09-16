@@ -13,7 +13,6 @@ import com.barisic.covid_19manager.models.StanjePacijenta
 import com.barisic.covid_19manager.viewmodels.PovijestStanjaViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class PovijestStanjaFragment : Fragment() {
 
@@ -22,9 +21,6 @@ class PovijestStanjaFragment : Fragment() {
     private lateinit var stanjaPacijentaAdapter: StanjaPacijentaAdapter
 
     private val povijestStanjaPacijentaObserver = Observer<ArrayList<StanjePacijenta>> {
-        it.forEach { stanjePacijenta ->
-            Timber.d("${stanjePacijenta.korisnikId} ${stanjePacijenta.vrijeme} ${stanjePacijenta.temperatura}")
-        }
         stanjaPacijentaAdapter = StanjaPacijentaAdapter(it)
         stanjaPacijentaAdapter.notifyDataSetChanged().apply {
             setupRecyclerView()
@@ -55,8 +51,7 @@ class PovijestStanjaFragment : Fragment() {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_povijest_stanja, container, false)
-        viewModel.lifecycleOwner = viewLifecycleOwner
-        if (viewModel.loading.value == null && viewModel.loading.value != true)
+        if (viewModel.loading.value == null || viewModel.loading.value == false)
             viewModel.getStanjaPacijenta()
         viewModel.povijestStanjaPacijenta.observe(
             viewLifecycleOwner,
@@ -74,7 +69,7 @@ class PovijestStanjaFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvStanjaPacijenta.adapter = stanjaPacijentaAdapter
         binding.rvStanjaPacijenta.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvStanjaPacijenta.adapter = stanjaPacijentaAdapter
     }
 }

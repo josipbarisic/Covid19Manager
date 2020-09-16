@@ -1,14 +1,15 @@
 package com.barisic.covid_19manager.modules
 
 import com.barisic.covid_19manager.viewmodels.*
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { LoginViewModel(get(), get(), get(), get()) }
+    viewModel { LoginViewModel(androidContext(), get(), get()) }
     viewModel { MainViewModel(get()) }
-    viewModel { StanjePacijentaViewModel(get(), get(), get()) }
+    viewModel { StanjePacijentaViewModel(androidContext(), get()) }
     viewModel { InfoViewModel() }
-    viewModel { PovijestStanjaViewModel(get(), get(), get()) }
-    viewModel { PorukaViewModel(get(), get(), get()) }
+    viewModel { PovijestStanjaViewModel(androidContext(), get()) }
+    viewModel { PorukaViewModel(androidContext(), get()) }
 }

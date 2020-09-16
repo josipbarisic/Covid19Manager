@@ -59,7 +59,6 @@ class PorukaDialogFragment(private val viewModel: PorukaViewModel) : DialogFragm
         dataBinding.lifecycleOwner = viewLifecycleOwner
         dataBinding.porukaViewModel = viewModel
 
-        viewModel.lifecycleOwner = viewLifecycleOwner
         viewModel.response.observe(viewLifecycleOwner, responseObserver)
         viewModel.closeDialog.observe(viewLifecycleOwner, closeDialogObserver)
         dataBinding.etPoruka.setOnEditorActionListener(onEditorActionListener)

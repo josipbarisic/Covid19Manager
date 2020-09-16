@@ -1,24 +1,21 @@
 package com.barisic.covid_19manager.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.*
+import android.content.Context
+import android.os.Handler
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.barisic.covid_19manager.R
 import com.barisic.covid_19manager.models.StanjePacijenta
-import com.barisic.covid_19manager.repositories.JsonWebTokenRepository
 import com.barisic.covid_19manager.repositories.StanjePacijentaRepository
 import com.barisic.covid_19manager.util.LOGGED_USER_ID
 import com.barisic.covid_19manager.util.SharedPrefs
-import com.barisic.covid_19manager.util.TOKEN_ACCESS_FAILED
-import timber.log.Timber
 
 class PovijestStanjaViewModel(
-    private val application: Application,
-    private val jsonTokenRepository: JsonWebTokenRepository,
+    private val context: Context,
     private val stanjePacijentaRepository: StanjePacijentaRepository
 ) : ViewModel() {
-    private val jsonToken = MutableLiveData<String>()
-    lateinit var lifecycleOwner: LifecycleOwner
-
+    private val sharedPrefs = SharedPrefs(context)
     private val povijestStanjaPacijentaMLD = MutableLiveData<ArrayList<StanjePacijenta>>()
     val povijestStanjaPacijenta: LiveData<ArrayList<StanjePacijenta>>
         get() = povijestStanjaPacijentaMLD
@@ -28,41 +25,30 @@ class PovijestStanjaViewModel(
     val errorMessage = MutableLiveData<Int?>()
 
     fun getStanjaPacijenta() {
-
         loading.value = true
-        Timber.d("GETTING_STANJA")
-        jsonTokenRepository.getJsonToken(jsonToken)
-        if (!jsonToken.hasObservers()) {
-            jsonToken.observe(lifecycleOwner, Observer {
-                when (it) {
-                    TOKEN_ACCESS_FAILED -> {
-                        println("TOKEN RESPONSE ----> NULL")
-                    }
-                    else -> {
-                        stanjePacijentaRepository.getStanjaPacijenta(
-                            SharedPrefs(application.applicationContext).getValueString(
-                                LOGGED_USER_ID
-                            )!!
-                        ) { stanjaPacijenta: ArrayList<StanjePacijenta>? ->
-                            loading.value = false
-                            when {
-                                stanjaPacijenta == null -> {
-                                    errorMessage.value = R.string.connection_error
-                                    placeHolderText.value =
-                                        application.resources.getString(R.string.medical_records_error)
-                                    showPlaceHolder.value = true
-                                }
-                                stanjaPacijenta.isEmpty() -> {
-                                    placeHolderText.value =
-                                        application.resources.getString(R.string.medical_records_empty)
-                                    showPlaceHolder.value = true
-                                }
-                                else -> povijestStanjaPacijentaMLD.value = stanjaPacijenta
-                            }
-                        }
-                    }
+        stanjePacijentaRepository.getStanjaPacijenta(
+            sharedPrefs.getValueString(
+                LOGGED_USER_ID
+            )!!
+        ) { stanjaPacijenta: ArrayList<StanjePacijenta>? ->
+            when {
+                stanjaPacijenta == null -> {
+                    errorMessage.value = R.string.connection_error
+                    placeHolderText.value = context.getString(R.string.medical_records_error)
+                    showPlaceHolder.value = true
+                    loading.value = false
                 }
-            })
+                stanjaPacijenta.isEmpty() -> {
+                    placeHolderText.value =
+                        context.getString(R.string.medical_records_empty)
+                    showPlaceHolder.value = true
+                    loading.value = false
+                }
+                else -> Handler().postDelayed({
+                    loading.value = false
+                    povijestStanjaPacijentaMLD.value = stanjaPacijenta
+                }, 1000)
+            }
         }
     }
 }

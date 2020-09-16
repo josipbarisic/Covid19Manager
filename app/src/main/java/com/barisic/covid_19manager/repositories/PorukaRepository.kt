@@ -8,16 +8,16 @@ import retrofit2.Response
 import timber.log.Timber
 
 class PorukaRepository(private val porukaService: PorukaInterface) {
-    fun sendMessage(token: String, poruka: Poruka, completion: (responseCode: Int?) -> Unit) {
-        porukaService.sendMessage(token, poruka).enqueue(object : Callback<Void> {
+    fun sendMessage(poruka: Poruka, responseCallback: (responseCode: Int?) -> Unit) {
+        porukaService.sendMessage(poruka).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 Timber.d(response.code().toString())
-                completion(response.code())
+                responseCallback(response.code())
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Timber.d(t)
-                completion(null)
+                responseCallback(null)
             }
         })
     }

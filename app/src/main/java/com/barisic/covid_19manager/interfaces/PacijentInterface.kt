@@ -1,21 +1,16 @@
 package com.barisic.covid_19manager.interfaces
 
 import com.barisic.covid_19manager.models.Pacijent
-import com.google.gson.JsonObject
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface PacijentInterface {
-
     @GET("api/pacijenti/{OIB}")
-    fun getPacijent(
-        @Header("Authorization") token: String,
-        @Path("OIB") oib: Long
-    ): Call<JsonObject>
+    fun getPacijent(@Path("OIB") oib: Long): Call<Pacijent>
 
-    @PUT("api/pacijenti/{OIB}")
-    fun updatePacijent(
-        @Header("Authorization") token: String, @Path("OIB") oib: Long,
-        @Body pacijent: Pacijent
-    ): Call<Void>
+    @PUT("api/pacijenti/updatePacijent/{OIB}")
+    fun updatePacijent(@Path("OIB") oib: Long, @Body pacijent: Pacijent): Call<Void>
 }

@@ -2,6 +2,7 @@ package com.barisic.covid_19manager.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -56,7 +57,10 @@ class InfoFragment : Fragment() {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                viewModel.loading.value = false
+                Handler().postDelayed({
+                    viewModel.loading.value = false
+                }, 1000)
+
             }
         }
 
