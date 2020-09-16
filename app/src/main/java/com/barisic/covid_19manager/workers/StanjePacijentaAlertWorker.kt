@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.barisic.covid_19manager.repositories.StanjePacijentaRepository
-import com.barisic.covid_19manager.util.Common
-import com.barisic.covid_19manager.util.LOGGED_USER_ID
-import com.barisic.covid_19manager.util.NotificationHelper
-import com.barisic.covid_19manager.util.SharedPrefs
+import com.barisic.covid_19manager.util.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
@@ -27,7 +24,7 @@ class StanjePacijentaAlertWorker(context: Context, workerParams: WorkerParameter
         ) {
             it?.let {
                 if (it.isNotEmpty() &&
-                    Common.isMoreThan12HDifference(it.last().vrijeme)
+                    Common.isMoreThanGivenMillisDifference(it.last().vrijeme, UNIX_12H)
                 ) {
                     NotificationHelper.showStateUpdateWarningNotification(applicationContext)
                 }

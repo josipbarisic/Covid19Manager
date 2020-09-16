@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -47,6 +48,9 @@ class StanjePacijentaFragment : Fragment() {
             }
         }
     }
+    private val resultObserver = Observer<Boolean> {
+        if (it) Toast.makeText(requireContext(), R.string.state_sent, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +72,6 @@ class StanjePacijentaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.lifecycleOwner = viewLifecycleOwner
         viewModel.stateOnDayTitle = "${getString(R.string.state_title)} ${Common.getDate()}"
         viewModel.showStanjePacijentaDialog.observe(
             viewLifecycleOwner,
@@ -78,6 +81,7 @@ class StanjePacijentaFragment : Fragment() {
             viewLifecycleOwner,
             showTemperaturePickerDialogFragmentObserver
         )
+        viewModel.result.observe(viewLifecycleOwner, resultObserver)
         binding.stanjePacijentaViewModel = viewModel
     }
 
